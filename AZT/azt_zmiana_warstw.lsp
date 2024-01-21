@@ -24,6 +24,10 @@
   (command "_laymrg" "N" "ST_GH100" "" "N" "S_GRIDS" "Y")
   (command "_laymrg" "N" "ST_GH200" "" "N" "S_GRIDS" "Y")
   (command "_laymrg" "N" "ST_EXISTING" "" "N" "S_HATCH" "Y")
+  (setq stss (cadr (sssetfirst nil (ssget "_ALL"))))
+  (command "_.CHPROP" stss "" "_C" "ByLayer" "")
+  (command "_.CHPROP" stss "" "_LT" "ByLayer" "")
+  (command "_.CHPROP" stss "" "_LW" "ByLayer" "")
 )
 
 (defun zmiana_warstw_advance ()
