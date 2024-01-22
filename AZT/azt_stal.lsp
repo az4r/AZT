@@ -1,0 +1,17 @@
+(defun c:azt_wstaw_spoine_pachwinowa ()
+  (command "-layer" "_S" "S_TEXT" "")
+  (setq skala_spoiny (getint "\nPodaj skale dla opisu spoiny: "))
+  (command "-insert" "s_spoina góra dó³" (getpoint) skala_spoiny "" "0")
+)
+
+(defun c:azt_wstaw_spoine_polv_gora ()
+  (command "-layer" "_S" "S_TEXT" "")
+  (setq skala_spoiny (getint "\nPodaj skale dla opisu spoiny: "))
+  (command "-insert" "s_spoina pó³V góra" (getpoint) skala_spoiny "" "0")
+)
+
+(defun c:azt_wstaw_spoine_polv_dol ()
+  (command "-layer" "_S" "S_TEXT" "")
+  (setq skala_spoiny (getint "\nPodaj skale dla opisu spoiny: "))
+  (command "-insert" "s_spoina pó³V dó³" (getpoint) skala_spoiny "" "0")
+)
