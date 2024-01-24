@@ -32,6 +32,7 @@
 (defun c:azt_wstaw_maly_mtext ()
   (aktualizuj_skale_blokow)
   (command "-layer" "_S" "S_TEXT" "")
+  (setvar "TEXTSTYLE" "ARIAL NARROW")
   
   (if (equal aktualna_skala_blokow "1")
       (setq aktualna_wysokosc_tekstu "2")
@@ -71,6 +72,7 @@
 (defun c:azt_wstaw_sredni_mtext ()
   (aktualizuj_skale_blokow)
   (command "-layer" "_S" "S_TEXT" "")
+  (setvar "TEXTSTYLE" "ARIAL NARROW")
   
   (if (equal aktualna_skala_blokow "1")
       (setq aktualna_wysokosc_tekstu "2.5")
@@ -110,6 +112,7 @@
 (defun c:azt_wstaw_duzy_mtext ()
   (aktualizuj_skale_blokow)
   (command "-layer" "_S" "S_TEXT" "")
+  (setvar "TEXTSTYLE" "ARIAL NARROW")
   
   (if (equal aktualna_skala_blokow "1")
       (setq aktualna_wysokosc_tekstu "3")
@@ -144,4 +147,18 @@
   (command "_mtext" punkt_wstwienia_mtextu "_H" aktualna_wysokosc_tekstu punkt_wstwienia_mtextu (getstring) "")
   ;(command "_mtext" punkt_wstwienia_mtextu "_H" aktualna_wysokosc_tekstu "_S" "Arial Narrow" punkt_wstwienia_mtextu (getstring) "")
   ;(command "_mtext" punkt_wstwienia_mtextu "_H" aktualna_skala_blokow "_S" "Arial Narrow" punkt_wstwienia_mtextu)
+)
+
+(defun c:azt_wstaw_opis_rzutni ()
+  (aktualizuj_skale_blokow)
+  (command "-layer" "_S" "S_TEXT" "")
+  ;(setq aktualna_skala_blokow (getint "\nPodaj skale dla opisu spoiny: "))
+  (command "-insert" "s_NR_POZ" (getpoint) aktualna_skala_blokow "" "0")
+)
+
+(defun c:azt_wstaw_opis_przekroju ()
+  (aktualizuj_skale_blokow)
+  (command "-layer" "_S" "S_TEXT" "")
+  ;(setq aktualna_skala_blokow (getint "\nPodaj skale dla opisu spoiny: "))
+  (command "-insert" "s_OPIS" (getpoint) aktualna_skala_blokow "" "0")
 )
