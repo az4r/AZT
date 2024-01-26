@@ -32,6 +32,7 @@
   (command "_.CHPROP" stss "" "_C" "ByLayer" "")
   (command "_.CHPROP" stss "" "_LT" "ByLayer" "")
   (command "_.CHPROP" stss "" "_LW" "ByLayer" "")
+  (print "Zakonczono aktualizacje warstw do nowych standardow")
 )
 
 (defun zmiana_warstw_advance ()
@@ -72,10 +73,14 @@
   (command "_.CHPROP" avss "" "_C" "ByLayer" "")
   (command "_.CHPROP" avss "" "_LT" "ByLayer" "")
   (command "_.CHPROP" avss "" "_LW" "ByLayer" "")
+  (setq avss (cadr (sssetfirst nil (ssget "_ALL" (list '(62 . 256) (cons 8 "S_HATCH"))))))
+  (command "-layer" "_S" "S_VIEW SECTION" "")
+  (command  "_hatchedit"  avss  "_boundary"  "_polyline"  "_yes")
   (setq avss (cadr (sssetfirst nil (ssget "_ALL" (list '(62 . 7) (cons 8 "0"))))))
   (command "_erase" avss "")
   (setq avss (cadr (sssetfirst nil (ssget "_X" (list '(0 . "TEXT") (cons 7 "Simplex.shx"))))))
   (command "_erase" avss "")
+  (print "Zakonczono podmiane warstw z Advance Steel")
 )
 
 (defun c:azt_zmw_st ()
