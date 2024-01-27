@@ -24,7 +24,9 @@
   (command "_move" selekcja_sruby_nwid "" '(0.0 0.0 0.0) (list aktualne_skleszczenie_sruby 0.0 0.0))
   (command "_move" selekcja_sruby_wid "" '(0.0 0.0 0.0) (list aktualne_skleszczenie_sruby 0.0 0.0))
   (command "_chprop" selekcja_sruby_wid "" "_C" "ByLayer" "")
-  (command "_chprop" selekcja_sruby_nwid "" "_C" "1" "")
+  (command "_chprop" selekcja_sruby_nwid "" "_C" "ByLayer" "")
+  (command "_.CHPROP" selekcja_sruby_wid "" "_LA" "S_VIEW" "")
+  (command "_.CHPROP" selekcja_sruby_nwid "" "_LA" "S_VIEW HIDDEN" "")
 )
 
 (defun c:azt_rysuj_leb ()
@@ -84,6 +86,7 @@
 (c:azt_skleszczenie_sruby)
 (c:azt_punkty_skleszczenia_sruby)
 (c:azt_ucs_sruby)
+(command "_layer" "_S" "S_VIEW" "")
 (command "_ZOOM" "_SCALE" "10000X")
 (c:azt_rysuj_leb)
 (c:azt_rysuj_trzpien)
