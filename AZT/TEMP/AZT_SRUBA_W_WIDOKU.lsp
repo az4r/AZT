@@ -2,6 +2,20 @@
   (setq aktualne_skleszczenie_sruby (getreal "\nPodaj skleszczenie sruby: "))
 )
 
+(defun c:azt_punkty_skleszczenia_sruby ()
+  (setq punkt1_skleszczenia_sruby (getpoint "\nWskaz punkt wstawienia sruby: "))
+  (setq punkt2_skleszczenia_sruby (getpoint "\nWskaz kierunek wstawienia sruby: "))
+)
+
+(defun c:azt_ucs_sruby ()
+  (command "_UCS" punkt1_skleszczenia_sruby (trans punkt2_skleszczenia_sruby 0 1) "")
+)
+
+(defun c:przywroc_ucs_sruby ()
+  (command "_UCS" "_World")
+  (princ)
+)
+
 ;#######################   SRUBA M16   #######################
 
 (defun c:azt_wprowadz_skleszczenie_sruby ()
@@ -60,14 +74,16 @@
 )
 
 (defun c:azt_rysuj_niewidoczna_czesc_sruby ()
-(command "_pline" '(0.0000 -8.0000) '(2.0000 -6.0000) '(40.0000 -6.0000) "")
-(command "_pline" '(0.0000 8.0000) '(2.0000 6.0000) '(40.0000 6.0000) "")
-(command "_pline" '(2.0000 -8.0000) '(2.0000 8.0000) "")
-(command "_pline" '(38.0000 -8.0000) '(38.0000 8.0000) "")
+  (command "_pline" '(0.0000 -8.0000) '(2.0000 -6.0000) '(40.0000 -6.0000) "")
+  (command "_pline" '(0.0000 8.0000) '(2.0000 6.0000) '(40.0000 6.0000) "")
+  (command "_pline" '(2.0000 -8.0000) '(2.0000 8.0000) "")
+  (command "_pline" '(38.0000 -8.0000) '(38.0000 8.0000) "")
 )
 
 (setvar "CECOLOR" "BYLAYER")
 (c:azt_skleszczenie_sruby)
+(c:azt_punkty_skleszczenia_sruby)
+(c:azt_ucs_sruby)
 (command "_ZOOM" "_SCALE" "10000X")
 (c:azt_rysuj_leb)
 (c:azt_rysuj_trzpien)
@@ -80,3 +96,6 @@
 (setvar "CECOLOR" "BYLAYER")
 (c:azt_wprowadz_skleszczenie_sruby)
 (command "_ZOOM" "_SCALE" "0.0001X")
+(c:przywroc_ucs_sruby)
+
+;#######################   KONIEC SRUBY M16   #######################
