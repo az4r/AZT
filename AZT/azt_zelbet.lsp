@@ -8,10 +8,10 @@
 )
 
 (defun c:pobierz_punkty ()
-  (setq punktA (getpoint "\nWskaz punkt A na rysunku: "))
-  (setq punktB (getpoint "\nWskaz punkt B na rysunku: "))
-  (setq punktC (getpoint "\nWskaz punkt C na rysunku: "))
-  (setq punktD (getpoint "\nWskaz punkt D na rysunku: "))
+  (setq punktA (getpoint "\nWskaz pocz¹tkowy skrajny punkt rozkladu z pierwszej strony (od lewej strony): "))
+  (setq punktB (getpoint "\nWskaz koncowy skrajny punkt rozkladu z pierwszej strony: "))
+  (setq punktC (getpoint "\nWskaz poczatkowy skrajny punkt rozkladu z drugiej strony (z lewej strony): "))
+  (setq punktD (getpoint "\nWskaz koncowy skrajny punkt rozkladu z drugiej strony: "))
 )
 
 (defun c:zmien_ucs ()
@@ -48,8 +48,8 @@
 )
 
 (defun c:parametry_rozkladu ()  
-  (setq odsuniecie_c1 (getreal "\nPodaj odsuniecie rozkladu z pierwszej strony: "))
-  (setq odsuniecie_c2 (getreal "\nPodaj odsuniecie rozkladu z drugiej strony: "))
+  (setq odsuniecie_c1 (getreal "\nPodaj odsuniecie rozkladu od poczatku rozkladu: "))
+  (setq odsuniecie_c2 (getreal "\nPodaj odsuniecie rozkladu od konca rozkladu: "))
   (setq otulina_c1 (getreal "\nPodaj otuline preta zbrojeniowego na pierwszym koncu: "))
   (setq otulina_c2 (getreal "\nPodaj otuline preta zbrojeniowego na drugim koncu: "))
   
@@ -120,7 +120,7 @@
 )
 
 (defun c:wybor_strony ()
-  (setq wybor (strcase (getstring "\Wybierz strone rozkladu pretow (L/P): ")))
+  (setq wybor (strcase (getstring "\Wyrownaj rozklad pretow wzledem lewej lub prawej strony okreslonego obszaru (L/P): ")))
 
   (if (= wybor "L")
       (c:obszar_z_lewej)

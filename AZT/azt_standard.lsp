@@ -162,3 +162,10 @@
   ;(setq aktualna_skala_blokow (getint "\nPodaj skale dla opisu spoiny: "))
   (command "-insert" "s_OPIS" (getpoint) aktualna_skala_blokow "" "0")
 )
+
+(defun c:azt_przypisz_warstwe ()
+  (setvar "CECOLOR" "BYLAYER")
+  (setvar "CELWEIGHT" -1)
+  (setvar "CELTYPE" "BYLAYER")
+  (command "_laymch" (entsel "\nWybierz obiekt do zmiany: ") "" "" "")
+)
