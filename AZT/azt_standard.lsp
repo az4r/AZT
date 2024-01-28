@@ -163,9 +163,18 @@
   (command "-insert" "s_OPIS" (getpoint) aktualna_skala_blokow "" "0")
 )
 
-(defun c:azt_przypisz_warstwe ()
+(defun azt_przypisz_warstwe_definicja ()
   (setvar "CECOLOR" "BYLAYER")
   (setvar "CELWEIGHT" -1)
   (setvar "CELTYPE" "BYLAYER")
-  (command "_laymch" (entsel "\nWybierz obiekt do zmiany: ") "" "" "")
+  (setq azt_obiekt_do_zmiany_warstwy (entsel "\nWybierz obiekt do zmiany: "))
+  (command "_laymch" azt_obiekt_do_zmiany_warstwy "" "" "_Y")
+  (setq azt_przypisz_warstwe_licznik 0)
+  (setq azt_przypisz_warstwe_licznik (1+ azt_przypisz_warstwe_licznik))
+)
+
+(defun c:azt_przypisz_warstwe ()
+  (while
+  (azt_przypisz_warstwe_definicja)
+  )
 )
