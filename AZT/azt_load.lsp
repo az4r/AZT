@@ -3,3 +3,4 @@
 (load "C:\\AZT\\azt_szablony.lsp")
 (load "C:\\AZT\\azt_zelbet.lsp")
 (load "C:\\AZT\\azt_stal.lsp")
+(load "C:\\AZT\\azt_baza.lsp")
