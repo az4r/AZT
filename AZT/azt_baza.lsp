@@ -3,6 +3,10 @@
 (defun azt_skleszczenie_sruby ()
   ;(setq aktualne_skleszczenie_sruby (getreal "\nPodaj skleszczenie sruby: "))
   (setq aktualne_skleszczenie_sruby (getstring (strcat "\nPodaj skleszczenie sruby: <" (rtos (distance punkt1_skleszczenia_sruby punkt2_skleszczenia_sruby) 2 0) ">")))
+  (if (equal aktualne_skleszczenie_sruby "")
+      (setq aktualne_skleszczenie_sruby (rtos (distance punkt1_skleszczenia_sruby punkt2_skleszczenia_sruby) 2 0))
+      (princ "")
+  )
   (setq aktualne_skleszczenie_sruby (atof aktualne_skleszczenie_sruby))
 )
 
