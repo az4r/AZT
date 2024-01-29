@@ -178,3 +178,7 @@
   (azt_przypisz_warstwe_definicja)
   )
 )
+
+(defun c:azt_prasa ()
+  (command "_change" (ssget "_X") "" "_P" "_E" "0" "")
+)

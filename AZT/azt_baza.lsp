@@ -1,7 +1,9 @@
 ;#######################   SRUBY   #######################
 
 (defun azt_skleszczenie_sruby ()
-  (setq aktualne_skleszczenie_sruby (getreal "\nPodaj skleszczenie sruby: "))
+  ;(setq aktualne_skleszczenie_sruby (getreal "\nPodaj skleszczenie sruby: "))
+  (setq aktualne_skleszczenie_sruby (getstring (strcat "\nPodaj skleszczenie sruby: <" (rtos (distance punkt1_skleszczenia_sruby punkt2_skleszczenia_sruby) 2 0) ">")))
+  (setq aktualne_skleszczenie_sruby (atof aktualne_skleszczenie_sruby))
 )
 
 (defun azt_punkty_skleszczenia_sruby ()
