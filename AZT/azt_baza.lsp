@@ -6,7 +6,7 @@
 
 (defun azt_punkty_skleszczenia_sruby ()
   (setq punkt1_skleszczenia_sruby (getpoint "\nWskaz punkt wstawienia sruby: "))
-  (setq punkt2_skleszczenia_sruby (getpoint "\nWskaz kierunek wstawienia sruby: "))
+  (setq punkt2_skleszczenia_sruby (getpoint punkt1_skleszczenia_sruby "\nWskaz kierunek wstawienia sruby: "))
 )
 
 (defun azt_punkt_wstawienia_sruby_przekr ()
@@ -131,9 +131,10 @@
 )
 
 (defun c:azt_sruba_widok_m12 ()
+  (przywroc_ucs_sruby)
   (setvar "CECOLOR" "BYLAYER")
-  (azt_skleszczenie_sruby)
   (azt_punkty_skleszczenia_sruby)
+  (azt_skleszczenie_sruby)
   (azt_ucs_sruby)
   (command "_layer" "_S" "S_VIEW" "")
   (command "_ZOOM" "_SCALE" "10000X")
@@ -168,7 +169,9 @@
 
 (defun c:azt_sruba_gwint_m12 ()
 (azt_punkt_wstawienia_sruby_przekr)
+(command "_ZOOM" "_SCALE" "10000X")
 (azt_ucs_wstawienia_sruby_przekr)
+(command "_ZOOM" "_SCALE" "0.0001X")
 (command "_layer" "_S" "S_VIEW" "")
 (command "_ZOOM" "_SCALE" "10000X")
 (azt_rysuj_gwint_przekr_m12)
@@ -194,7 +197,9 @@
 
 (defun c:azt_sruba_leb_m12 ()
 (azt_punkt_wstawienia_sruby_przekr)
+(command "_ZOOM" "_SCALE" "10000X")
 (azt_ucs_wstawienia_sruby_przekr)
+(command "_ZOOM" "_SCALE" "0.0001X")
 (command "_layer" "_S" "S_VIEW" "")
 (command "_ZOOM" "_SCALE" "10000X")
 (azt_rysuj_leb_przekr_m12)
@@ -264,9 +269,10 @@
 )
 
 (defun c:azt_sruba_widok_m16 ()
+  (przywroc_ucs_sruby)
   (setvar "CECOLOR" "BYLAYER")
-  (azt_skleszczenie_sruby)
   (azt_punkty_skleszczenia_sruby)
+  (azt_skleszczenie_sruby)
   (azt_ucs_sruby)
   (command "_layer" "_S" "S_VIEW" "")
   (command "_ZOOM" "_SCALE" "10000X")
@@ -301,7 +307,9 @@
 
 (defun c:azt_sruba_gwint_m16 ()
 (azt_punkt_wstawienia_sruby_przekr)
+(command "_ZOOM" "_SCALE" "10000X")
 (azt_ucs_wstawienia_sruby_przekr)
+(command "_ZOOM" "_SCALE" "0.0001X")
 (command "_layer" "_S" "S_VIEW" "")
 (command "_ZOOM" "_SCALE" "10000X")
 (azt_rysuj_gwint_przekr_m16)
@@ -327,7 +335,9 @@
 
 (defun c:azt_sruba_leb_m16 ()
 (azt_punkt_wstawienia_sruby_przekr)
+(command "_ZOOM" "_SCALE" "10000X")
 (azt_ucs_wstawienia_sruby_przekr)
+(command "_ZOOM" "_SCALE" "0.0001X")
 (command "_layer" "_S" "S_VIEW" "")
 (command "_ZOOM" "_SCALE" "10000X")
 (azt_rysuj_leb_przekr_m16)
