@@ -180,5 +180,7 @@
 )
 
 (defun c:azt_prasa ()
-  (command "_change" (ssget "_X") "" "_P" "_E" "0" "")
+  ;(command "_change" (ssget "_X") "" "_P" "_E" "0" "")
+  (command "_move""_all""""""0,0,1e99""_move""_all""""""0,0,-1e99")
+  ;^C^C_UCS;;_move;_all;;0,0,1e99;;_move;_all;;0,0,-1e99;;
 )
