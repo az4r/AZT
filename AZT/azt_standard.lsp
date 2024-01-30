@@ -163,24 +163,52 @@
   (command "-insert" "s_OPIS" (getpoint) aktualna_skala_blokow "" "0")
 )
 
-(defun azt_przypisz_warstwe_definicja ()
-  (setvar "CECOLOR" "BYLAYER")
-  (setvar "CELWEIGHT" -1)
-  (setvar "CELTYPE" "BYLAYER")
-  (setq azt_obiekt_do_zmiany_warstwy (entsel "\nWybierz obiekt do zmiany: "))
-  (command "_laymch" azt_obiekt_do_zmiany_warstwy "" "" "_Y")
-  (setq azt_przypisz_warstwe_licznik 0)
-  (setq azt_przypisz_warstwe_licznik (1+ azt_przypisz_warstwe_licznik))
-)
+;(defun azt_przypisz_warstwe_definicja ()
+  ;(setvar "CECOLOR" "BYLAYER")
+  ;(setvar "CELWEIGHT" -1)
+  ;(setvar "CELTYPE" "BYLAYER")
+  ;(setq azt_obiekt_do_zmiany_warstwy (entsel "\nWybierz obiekt do zmiany: "))
+  ;(command "_laymch" azt_obiekt_do_zmiany_warstwy "" "" "_Y")
+  ;(setq azt_przypisz_warstwe_licznik 0)
+  ;(setq azt_przypisz_warstwe_licznik (1+ azt_przypisz_warstwe_licznik))
+;)
+
+;(defun c:azt_przypisz_warstwe ()
+  ;(while
+  ;(azt_przypisz_warstwe_definicja)
+  ;)
+;)
+
+;(defun azt_przetnij_w_punkcie_definicja ()
+  ;(command "_break" pause "_f" pause "@")
+  ;(setq azt_przetnij_w_punkcie_licznik 0)
+  ;(setq azt_przetnij_w_punkcie_licznik (1+ przetnij_w_punkcie_licznik))
+;)
+
+;(defun c:azt_przetnij_w_punkcie ()
+  ;(while
+  ;(azt_przetnij_w_punkcie_definicja)
+  ;)
+;)
 
 (defun c:azt_przypisz_warstwe ()
-  (while
-  (azt_przypisz_warstwe_definicja)
+  (repeat 100
+    (setvar "CECOLOR" "BYLAYER")
+    (setvar "CELWEIGHT" -1)
+    (setvar "CELTYPE" "BYLAYER")
+    (setq azt_obiekt_do_zmiany_warstwy (entsel "\nWybierz obiekt do zmiany: "))
+    (command "_laymch" azt_obiekt_do_zmiany_warstwy "" "" "_Y")
+  )
+)
+
+(defun c:azt_przetnij_w_punkcie ()
+  (repeat 100
+    (command "_break" pause "_f" pause "@")
   )
 )
 
 (defun c:azt_prasa ()
   ;(command "_change" (ssget "_X") "" "_P" "_E" "0" "")
-  (command "_move""_all""""""0,0,1e99""_move""_all""""""0,0,-1e99")
-  ;^C^C_UCS;;_move;_all;;0,0,1e99;;_move;_all;;0,0,-1e99;;
+   ;^C^C_UCS;;_move;_all;;0,0,1e99;;_move;_all;;0,0,-1e99;;
+  (command "_move" "_all" "" "" "0,0,1e99" "_move" "_all" "" "" "0,0,-1e99")
 )
