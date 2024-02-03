@@ -3,6 +3,8 @@
   (setq azt_schody_aktualny_odstep "250")
 )
 
+;#######################   SCHODY - POCZATEK  #######################
+
 (defun c:azt_schody ()
   (setq azt_schody_roznica_poziomow (getstring "\nPodaj roznice poziomow (mm): "))
   
@@ -55,8 +57,5 @@
   (command "_move" azt_bieg_schodowy "" '(0 0))
   (setq azt_bieg_schodowy (ssadd))
 )
+;#######################   SCHODY - KONIEC  #######################
 (azt_schody_start)
-(c:azt_schody)
-(princ)
-(princ "\n#### UWAGI: arza@niras.com ####")
-(princ)
