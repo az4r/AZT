@@ -1,7 +1,14 @@
+;#######################   DANE WEJSCIOWE ##########################
+
 (defun azt_sruba_start ()
   (setq azt_aktualna_sruba_widok_typ "12")
   (setq azt_aktualna_sruba_gwint_typ "12")
   (setq azt_aktualna_sruba_leb_typ "12")
+  (princ)
+)
+
+(defun azt_profil_widok_bok_start ()
+  (setq azt_aktualny_profil_widok_wysokosc "100")
   (princ)
 )
 
@@ -27,12 +34,15 @@
 )
 
 (defun azt_wprowadz_skleszczenie_sruby ()
+  (setq azt_selekcja_sruby_st_nwid (cadr (sssetfirst nil (ssget "_ALL" (list '(62 . 126))))))
   (setq azt_selekcja_sruby_nwid (cadr (sssetfirst nil (ssget "_ALL" (list '(62 . 127))))))
   (setq azt_selekcja_sruby_wid (cadr (sssetfirst nil (ssget "_ALL" (list '(62 . 128))))))
   (command "_move" azt_selekcja_sruby_nwid "" '(0.0 0.0 0.0) (list azt_aktualne_skleszczenie_sruby 0.0 0.0))
   (command "_move" azt_selekcja_sruby_wid "" '(0.0 0.0 0.0) (list azt_aktualne_skleszczenie_sruby 0.0 0.0))
+  (command "_chprop" azt_selekcja_sruby_st_nwid "" "_C" "ByLayer" "")
   (command "_chprop" azt_selekcja_sruby_wid "" "_C" "ByLayer" "")
   (command "_chprop" azt_selekcja_sruby_nwid "" "_C" "ByLayer" "")
+  (command "_.CHPROP" azt_selekcja_sruby_st_nwid "" "_LA" "S_VIEW HIDDEN" "")
   (command "_.CHPROP" azt_selekcja_sruby_wid "" "_LA" "S_VIEW" "")
   (command "_.CHPROP" azt_selekcja_sruby_nwid "" "_LA" "S_VIEW HIDDEN" "")
 )
@@ -167,6 +177,7 @@
   (command "_layer" "_S" "S_VIEW" "")
   (setvar "CECOLOR" "BYLAYER")
   (azt_rysuj_leb_m12)
+  (setvar "CECOLOR" "126")
   (azt_rysuj_trzpien_m12)
   (setvar "CECOLOR" "127")
   (azt_rysuj_niewidoczna_czesc_sruby_m12)
@@ -304,6 +315,7 @@
   (command "_layer" "_S" "S_VIEW" "")
   (setvar "CECOLOR" "BYLAYER")
   (azt_rysuj_leb_m16)
+  (setvar "CECOLOR" "126")
   (azt_rysuj_trzpien_m16)
   (setvar "CECOLOR" "127")
   (azt_rysuj_niewidoczna_czesc_sruby_m16)
@@ -373,5 +385,27 @@
 (command "_layer" "_S" "0" "")
 )
 ;#######################   KONIEC SRUBY M16   #######################
-;#######################   SRUBY - KONIEC  #######################
+;#######################   SRUBY - KONIEC  ##########################
+
+;#######################   PROFILE - POCZATEK  #######################
+
+(defun c:azt_profil_widok_bok ()
+  (setq azt_profil_widok_wysokosc (getstring (strcat "\nPodaj wysokosc profilu (mm): <" azt_aktualny_profil_widok_wysokosc ">")))
+    (if (equal azt_profil_widok_wysokosc "")
+      (setq azt_profil_widok_wysokosc azt_aktualny_profil_widok_wysokosc)
+      (princ)
+  )
+  (setq azt_aktualny_profil_widok_wysokosc azt_profil_widok_wysokosc)
+  
+  (command "_mline" "_J" "_Z" "_S" azt_profil_widok_wysokosc)
+  (while (= (getvar "CMDNAMES") "MLINE")
+    (command pause)
+  )
+  (command "_explode" (entlast))
+  (princ)
+)
+
+;#######################   PROFILE - KONIEC  #######################
+
 (azt_sruba_start)
+(azt_profil_widok_bok_start)
