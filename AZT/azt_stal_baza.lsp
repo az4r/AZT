@@ -413,7 +413,11 @@
   (setq azt_aktualny_typ_profil_widok azt_typ_profil_widok)
   
   (setq azt_profil_widok_bok_wid (strcat "AZT_PROF_WID_G_" azt_rodzina_profil_widok azt_typ_profil_widok))
-  (command "_mline" "_J" "_Z" "_S" "1" "_ST" azt_profil_widok_bok_wid)
+  (repeat 100
+  (setq azt_profil_widok_punkt1 (getpoint "\n Wskaz punkt poczatkowy: "))
+  (setq azt_profil_widok_punkt2 (getpoint azt_profil_widok_punkt1 "\n Wskaz punkt koncowy: "))
+  (command "_mline" "_J" "_Z" "_S" "1" "_ST" azt_profil_widok_bok_wid azt_profil_widok_punkt1 azt_profil_widok_punkt2 "")
+  )
 )
 
 (defun c:azt_profil_widok_bok_wid ()
@@ -432,7 +436,11 @@
   (setq azt_aktualny_typ_profil_widok azt_typ_profil_widok)
   
   (setq azt_profil_widok_bok_wid (strcat "AZT_PROF_WID_B_W_" azt_rodzina_profil_widok azt_typ_profil_widok))
-  (command "_mline" "_J" "_Z" "_S" "1" "_ST" azt_profil_widok_bok_wid)
+  (repeat 100
+  (setq azt_profil_widok_punkt1 (getpoint "\n Wskaz punkt poczatkowy: "))
+  (setq azt_profil_widok_punkt2 (getpoint azt_profil_widok_punkt1 "\n Wskaz punkt koncowy: "))
+  (command "_mline" "_J" "_Z" "_S" "1" "_ST" azt_profil_widok_bok_wid azt_profil_widok_punkt1 azt_profil_widok_punkt2 "")
+  )
 )
 
 (defun c:azt_profil_widok_bok_nwid ()
@@ -451,7 +459,20 @@
   (setq azt_aktualny_typ_profil_widok azt_typ_profil_widok)
   
   (setq azt_profil_widok_bok_wid (strcat "AZT_PROF_WID_B_NW_" azt_rodzina_profil_widok azt_typ_profil_widok))
-  (command "_mline" "_J" "_Z" "_S" "1" "_ST" azt_profil_widok_bok_wid)
+  (repeat 100
+  (setq azt_profil_widok_punkt1 (getpoint "\n Wskaz punkt poczatkowy: "))
+  (setq azt_profil_widok_punkt2 (getpoint azt_profil_widok_punkt1 "\n Wskaz punkt koncowy: "))
+  (command "_mline" "_J" "_Z" "_S" "1" "_ST" azt_profil_widok_bok_wid azt_profil_widok_punkt1 azt_profil_widok_punkt2 "")
+  )
+)
+
+(defun c:azt_profil_widok_odwroc_strone ()
+  (repeat 100
+  (setq azt_profil_widok_odwroc_strone_obiekt (entsel))
+  (command "_mirror" azt_profil_widok_odwroc_strone_obiekt "" (cdr (assoc 10 (entget (car azt_profil_widok_odwroc_strone_obiekt)))) (cdr (assoc 11 (reverse (entget (car azt_profil_widok_odwroc_strone_obiekt))))) "_Y")
+  ;(command "_mirror" (entlast) "" (cdr (assoc 10 (entget (entlast)))) (cdr (assoc 11 (reverse (entget (entlast))))) "_Y")
+  )
+  (princ)
 )
 
 ;#######################   PROFILE - KONIEC  #######################
