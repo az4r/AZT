@@ -57,6 +57,3 @@
 )
 (azt_schody_start)
 (c:azt_schody)
-(princ)
-(princ "\n#### UWAGI: arza@niras.com ####")
-(princ)
