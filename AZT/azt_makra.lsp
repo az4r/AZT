@@ -2,6 +2,9 @@
   (setq azt_schody_aktualna_wysokosc_miedzy_stopniami "175")
   (setq azt_schody_aktualny_odstep "250")
 )
+(defun azt_chudy_beton_start ()
+  (setq azt_chudy_beton_aktualna_gr_warstwy "10")
+)
 
 ;#######################   SCHODY - POCZATEK  #######################
 
@@ -58,4 +61,25 @@
   (setq azt_bieg_schodowy (ssadd))
 )
 ;#######################   SCHODY - KONIEC  #######################
+
+;###################   CHUDY BETON - POCZATEK   ###################
+
+(defun c:azt_chudy_beton ()
+  (setq azt_chudy_beton_punkt1 (getpoint "\nPodaj pierwszy punkt: "))
+  (setq azt_chudy_beton_punkt2 (getpoint azt_chudy_beton_punkt1 "\nPodaj drugi punkt: "))
+  (setq azt_chudy_beton_gr_warstwy (getstring (strcat "\nGrubosc warstwy betonu niekonstrukcyjnego: <" azt_chudy_beton_aktualna_gr_warstwy ">")))
+    (if (equal azt_chudy_beton_gr_warstwy "")
+      (setq azt_chudy_beton_gr_warstwy azt_chudy_beton_aktualna_gr_warstwy)
+      (princ)
+  )
+  (setq azt_chudy_beton_aktualna_gr_warstwy azt_chudy_beton_gr_warstwy)
+  (setq azt_chudy_beton_punkt3 (strcat "@" (rtos (* (atoi azt_chudy_beton_aktualna_gr_warstwy) (sqrt 2))) "<315"))
+  (setq azt_chudy_beton_punkt4 (strcat "@" (rtos (+ (distance azt_chudy_beton_punkt1 azt_chudy_beton_punkt2) (* (atoi azt_chudy_beton_gr_warstwy) 2))) "<180"))
+  (command "_ZOOM" "_SCALE" "10000X")
+  (command "_pline" azt_chudy_beton_punkt1 azt_chudy_beton_punkt2 azt_chudy_beton_punkt3 azt_chudy_beton_punkt4 azt_chudy_beton_punkt1 "")
+  (command "_ZOOM" "_SCALE" "0.0001X")
+
+)
+;###################   CHUDY BETON - KONIEC   ###################
 (azt_schody_start)
+(azt_chudy_beton_start)
