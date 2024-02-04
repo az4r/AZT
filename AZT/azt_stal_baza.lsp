@@ -7,9 +7,9 @@
   (princ)
 )
 
-(defun azt_profil_widok_bok_start ()
-  (setq azt_aktualny_profil_widok_wysokosc "100")
-  (princ)
+(defun azt_profil_widok_start ()
+  (setq azt_aktualna_rodzina_profil_widok "UPE")
+  (setq azt_aktualny_typ_profil_widok "200")
 )
 
 ;#######################   SRUBY - POCZATEK  #######################
@@ -389,23 +389,72 @@
 
 ;#######################   PROFILE - POCZATEK  #######################
 
-(defun c:azt_profil_widok_bok ()
-  (setq azt_profil_widok_wysokosc (getstring (strcat "\nPodaj wysokosc profilu (mm): <" azt_aktualny_profil_widok_wysokosc ">")))
-    (if (equal azt_profil_widok_wysokosc "")
-      (setq azt_profil_widok_wysokosc azt_aktualny_profil_widok_wysokosc)
+(defun c:azt_wczytaj_baze_profili_stalowych ()
+  (vl-cmdf "_.-insert" "C:\\AZT\\TEMPLATES\\SZABLON_PROFILI_STALOWYCH.dwg" '(0. 0. 0.) "" "" "")
+  (vl-cmdf "_.erase" (entlast) "")
+  (vl-cmdf "_.-purge" "Blocks" "SZABLON_PROFILI_STALOWYCH" "_N")
+  (vl-cmdf "_.-purge" "Blocks" "AZT_PROFIL_WIDOK" "_N")
+  (princ)
+)
+
+(defun c:azt_profil_widok_gora ()
+  (setq azt_rodzina_profil_widok (getstring (strcat "\nWybierz rodzine profilu [HEA/UPE]: <" azt_aktualna_rodzina_profil_widok ">")))
+  (if (equal azt_rodzina_profil_widok "")
+      (setq azt_rodzina_profil_widok azt_aktualna_rodzina_profil_widok)
       (princ)
   )
-  (setq azt_aktualny_profil_widok_wysokosc azt_profil_widok_wysokosc)
+  (setq azt_aktualna_rodzina_profil_widok azt_rodzina_profil_widok)
   
-  (command "_mline" "_J" "_Z" "_S" azt_profil_widok_wysokosc)
-  (while (= (getvar "CMDNAMES") "MLINE")
-    (command pause)
+  (setq azt_typ_profil_widok (getstring (strcat "\nWybierz typ profilu [120/200]: <" azt_aktualny_typ_profil_widok ">")))
+  (if (equal azt_typ_profil_widok "")
+      (setq azt_typ_profil_widok azt_aktualny_typ_profil_widok)
+      (princ)
   )
-  (command "_explode" (entlast))
-  (princ)
+  (setq azt_aktualny_typ_profil_widok azt_typ_profil_widok)
+  
+  (setq azt_profil_widok_bok_wid (strcat "AZT_PROF_WID_G_" azt_rodzina_profil_widok azt_typ_profil_widok))
+  (command "_mline" "_J" "_Z" "_S" "1" "_ST" azt_profil_widok_bok_wid)
+)
+
+(defun c:azt_profil_widok_bok_wid ()
+  (setq azt_rodzina_profil_widok (getstring (strcat "\nWybierz rodzine profilu [HEA/UPE]: <" azt_aktualna_rodzina_profil_widok ">")))
+  (if (equal azt_rodzina_profil_widok "")
+      (setq azt_rodzina_profil_widok azt_aktualna_rodzina_profil_widok)
+      (princ)
+  )
+  (setq azt_aktualna_rodzina_profil_widok azt_rodzina_profil_widok)
+  
+  (setq azt_typ_profil_widok (getstring (strcat "\nWybierz typ profilu [120/200]: <" azt_aktualny_typ_profil_widok ">")))
+  (if (equal azt_typ_profil_widok "")
+      (setq azt_typ_profil_widok azt_aktualny_typ_profil_widok)
+      (princ)
+  )
+  (setq azt_aktualny_typ_profil_widok azt_typ_profil_widok)
+  
+  (setq azt_profil_widok_bok_wid (strcat "AZT_PROF_WID_B_W_" azt_rodzina_profil_widok azt_typ_profil_widok))
+  (command "_mline" "_J" "_Z" "_S" "1" "_ST" azt_profil_widok_bok_wid)
+)
+
+(defun c:azt_profil_widok_bok_nwid ()
+  (setq azt_rodzina_profil_widok (getstring (strcat "\nWybierz rodzine profilu [HEA/UPE]: <" azt_aktualna_rodzina_profil_widok ">")))
+  (if (equal azt_rodzina_profil_widok "")
+      (setq azt_rodzina_profil_widok azt_aktualna_rodzina_profil_widok)
+      (princ)
+  )
+  (setq azt_aktualna_rodzina_profil_widok azt_rodzina_profil_widok)
+  
+  (setq azt_typ_profil_widok (getstring (strcat "\nWybierz typ profilu [120/200]: <" azt_aktualny_typ_profil_widok ">")))
+  (if (equal azt_typ_profil_widok "")
+      (setq azt_typ_profil_widok azt_aktualny_typ_profil_widok)
+      (princ)
+  )
+  (setq azt_aktualny_typ_profil_widok azt_typ_profil_widok)
+  
+  (setq azt_profil_widok_bok_wid (strcat "AZT_PROF_WID_B_NW_" azt_rodzina_profil_widok azt_typ_profil_widok))
+  (command "_mline" "_J" "_Z" "_S" "1" "_ST" azt_profil_widok_bok_wid)
 )
 
 ;#######################   PROFILE - KONIEC  #######################
 
 (azt_sruba_start)
-(azt_profil_widok_bok_start)
+(azt_profil_widok_start)
