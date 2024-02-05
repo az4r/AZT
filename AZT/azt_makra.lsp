@@ -33,7 +33,7 @@
   )
   (setq azt_schody_aktualna_ilosc_stopni azt_schody_ilosc_stopni)
   
-  (setq azt_schody_aktualna_wysokosc_miedzy_stopniami (rtos (/ (atoi azt_schody_roznica_poziomow) (atoi azt_schody_ilosc_stopni)) 2 0))
+  (setq azt_schody_aktualna_wysokosc_miedzy_stopniami (rtos (/ (atof azt_schody_roznica_poziomow) (atof azt_schody_ilosc_stopni)) 2 10))
   (setq azt_schody_wysokosc_miedzy_stopniami (getstring (strcat "\nPodaj wysokosc stopnia (mm): <" azt_schody_aktualna_wysokosc_miedzy_stopniami ">")))
     (if (equal azt_schody_wysokosc_miedzy_stopniami "")
       (setq azt_schody_wysokosc_miedzy_stopniami azt_schody_aktualna_wysokosc_miedzy_stopniami)
@@ -52,7 +52,7 @@
 	(ssadd (entlast) azt_bieg_schodowy)
   )
   (command "_pedit" "_M" azt_bieg_schodowy "" "_J" "" "")
-  (command "_pline" '(0 0) (strcat "@" (rtos (* (atoi azt_schody_ilosc_stopni) (atoi azt_schody_odstep)) 2 0) "," (rtos (* (atoi azt_schody_ilosc_stopni) (atoi azt_schody_wysokosc_miedzy_stopniami)) 2 0)) "")
+  (command "_pline" '(0 0) (strcat "@" (rtos (* (atoi azt_schody_ilosc_stopni) (atoi azt_schody_odstep)) 2 0) "," (rtos (* (atof azt_schody_ilosc_stopni) (atof azt_schody_wysokosc_miedzy_stopniami)) 2 10)) "")
   (command "_ZOOM" "_SCALE" "0.0001X")
   (ssadd (entlast) azt_bieg_schodowy)
   
