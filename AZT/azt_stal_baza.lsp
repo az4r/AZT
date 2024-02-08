@@ -1244,7 +1244,7 @@
   )
   (setq azt_aktualny_typ_profil_widok azt_typ_profil_widok)
   
-  (setq azt_profil_widok_bok_wid (strcat "AZT_PROF_WID_G_" azt_rodzina_profil_widok azt_typ_profil_widok))
+  (setq azt_profil_widok_bok_wid (strcat "AZT_PL_WID_G_" azt_rodzina_profil_widok azt_typ_profil_widok))
   (repeat 100
   (setq azt_profil_widok_punkt1 (getpoint "\n Wskaz punkt poczatkowy: "))
   (setq azt_profil_widok_punkt2 (getpoint azt_profil_widok_punkt1 "\n Wskaz punkt koncowy: "))
@@ -1267,7 +1267,7 @@
   )
   (setq azt_aktualny_typ_profil_widok azt_typ_profil_widok)
   
-  (setq azt_profil_widok_bok_wid (strcat "AZT_PROF_WID_B_W_" azt_rodzina_profil_widok azt_typ_profil_widok))
+  (setq azt_profil_widok_bok_wid (strcat "AZT_PL_WID_B_W_" azt_rodzina_profil_widok azt_typ_profil_widok))
   (repeat 100
   (setq azt_profil_widok_punkt1 (getpoint "\n Wskaz punkt poczatkowy: "))
   (setq azt_profil_widok_punkt2 (getpoint azt_profil_widok_punkt1 "\n Wskaz punkt koncowy: "))
@@ -1290,7 +1290,7 @@
   )
   (setq azt_aktualny_typ_profil_widok azt_typ_profil_widok)
   
-  (setq azt_profil_widok_bok_wid (strcat "AZT_PROF_WID_B_NW_" azt_rodzina_profil_widok azt_typ_profil_widok))
+  (setq azt_profil_widok_bok_wid (strcat "AZT_PL_WID_B_NW_" azt_rodzina_profil_widok azt_typ_profil_widok))
   (repeat 100
   (setq azt_profil_widok_punkt1 (getpoint "\n Wskaz punkt poczatkowy: "))
   (setq azt_profil_widok_punkt2 (getpoint azt_profil_widok_punkt1 "\n Wskaz punkt koncowy: "))
