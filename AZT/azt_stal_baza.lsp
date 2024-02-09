@@ -1230,7 +1230,7 @@
 )
 
 (defun c:azt_profil_widok_gora ()
-  (setq azt_rodzina_profil_widok (getstring (strcat "\nWybierz rodzine profilu [HEA/HEB/UPE]: <" azt_aktualna_rodzina_profil_widok ">")))
+  (setq azt_rodzina_profil_widok (getstring (strcat "\nWybierz rodzine profilu [HEA/HEB/UPE/L/RHS]: <" azt_aktualna_rodzina_profil_widok ">")))
   (if (equal azt_rodzina_profil_widok "")
       (setq azt_rodzina_profil_widok azt_aktualna_rodzina_profil_widok)
       (princ)
@@ -1253,7 +1253,7 @@
 )
 
 (defun c:azt_profil_widok_bok_wid ()
-  (setq azt_rodzina_profil_widok (getstring (strcat "\nWybierz rodzine profilu [HEA/HEB/UPE]: <" azt_aktualna_rodzina_profil_widok ">")))
+  (setq azt_rodzina_profil_widok (getstring (strcat "\nWybierz rodzine profilu [HEA/HEB/UPE/L/RHS]: <" azt_aktualna_rodzina_profil_widok ">")))
   (if (equal azt_rodzina_profil_widok "")
       (setq azt_rodzina_profil_widok azt_aktualna_rodzina_profil_widok)
       (princ)
@@ -1276,7 +1276,7 @@
 )
 
 (defun c:azt_profil_widok_bok_nwid ()
-  (setq azt_rodzina_profil_widok (getstring (strcat "\nWybierz rodzine profilu [HEA/HEB/UPE]: <" azt_aktualna_rodzina_profil_widok ">")))
+  (setq azt_rodzina_profil_widok (getstring (strcat "\nWybierz rodzine profilu [HEA/HEB/UPE/L/RHS]: <" azt_aktualna_rodzina_profil_widok ">")))
   (if (equal azt_rodzina_profil_widok "")
       (setq azt_rodzina_profil_widok azt_aktualna_rodzina_profil_widok)
       (princ)
