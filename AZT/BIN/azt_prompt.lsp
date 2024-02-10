@@ -1,0 +1,20 @@
+(defun c:azt_prompt ()
+(setq files (vl-directory-files "C:\\AZT\\DATA\\STEEL\\AZT_PL_WID" "*HEA.mln")) ; Lista plikow
+(setq files-string "[")
+(setq i 0)
+(foreach file files
+  (setq i (1+ i))
+  (setq files-string (strcat files-string file))
+  (if (< i (length files))
+    (setq files-string (strcat files-string "/"))
+  )
+)
+(setq files-string (strcat files-string "]"))
+(setq lista_typow (getstring (strcat "\nWybierz typ profilu " files-string ": <" azt_aktualny_typ_profil_widok ">")))
+)
+;(print lista_typow)
+(c:azt_prompt)
+
+;(vl-string-left-trim "HEA" "HEA200")
+;(vl-string-right-trim "HEA" "HEA200")
+;(vl-string-trim "HEA" "HEA200")
