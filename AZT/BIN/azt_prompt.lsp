@@ -1,10 +1,11 @@
 (defun c:azt_prompt ()
-(setq files (vl-directory-files "C:\\AZT\\DATA\\STEEL\\AZT_PL_WID" "*HEA.mln")) ; Lista plikow
+(setq files (vl-directory-files "C:\\AZT\\DATA\\STEEL\\AZT_PL_WID" "HEA*.mln")) ; Lista plikow
 (setq files-string "[")
 (setq i 0)
 (foreach file files
   (setq i (1+ i))
-  (setq files-string (strcat files-string file))
+  ;(setq files-string (strcat files-string (vl-filename-base file)))
+  (setq files-string (strcat files-string (vl-string-trim "HEA" (vl-filename-base file))))
   (if (< i (length files))
     (setq files-string (strcat files-string "/"))
   )
