@@ -1,5 +1,10 @@
 (defun c:azt_generuj_szablon_profili_stalowych ()
-  
+
+(command "_CMLSTYLE" "STANDARD")
+(vl-cmdf "_.erase" (ssget "_ALL") "")
+(vl-cmdf "_.-purge" "Blocks" "AZT_PROFIL_WIDOK" "_N")
+;(vl-cmdf "_.-purge" "Mlinestyles" "*" "_N")
+
 (setq azt_aktywny_dokument (vla-get-activedocument (vlax-get-acad-object)))
 (setq azt_katalog (vla-item (vla-get-dictionaries azt_aktywny_dokument) "ACAD_MLINESTYLE"))
 (vlax-for x azt_katalog
