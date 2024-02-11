@@ -1,0 +1,140 @@
+MLSTYLE
+2
+AZT_PL_WID_G_HEA200
+70
+0
+3
+ 
+62
+256
+51
+90
+52
+90
+71
+5
+49
+100
+62
+2
+6
+ Continuous
+49
+3.25
+62
+4
+6
+ ACAD_ISO02W100
+49
+0
+62
+7
+6
+ ACAD_ISO04W100
+49
+-3.25
+62
+4
+6
+ ACAD_ISO02W100
+49
+-100
+62
+2
+6
+ Continuous
+0
+
+MLSTYLE
+2
+AZT_PL_WID_B_W_HEA200
+70
+0
+3
+ 
+62
+256
+51
+90
+52
+90
+71
+5
+49
+95
+62
+2
+6
+ Continuous
+49
+85
+62
+2
+6
+ Continuous
+49
+0
+62
+7
+6
+ ACAD_ISO04W100
+49
+-85
+62
+2
+6
+ Continuous
+49
+-95
+62
+2
+6
+ Continuous
+0
+
+MLSTYLE
+2
+AZT_PL_WID_B_NW_HEA200
+70
+0
+3
+ 
+62
+256
+51
+90
+52
+90
+71
+5
+49
+95
+62
+2
+6
+ Continuous
+49
+85
+62
+2
+6
+ Continuous
+49
+0
+62
+7
+6
+ ACAD_ISO04W100
+49
+-85
+62
+2
+6
+ Continuous
+49
+-95
+62
+2
+6
+ Continuous
+0
