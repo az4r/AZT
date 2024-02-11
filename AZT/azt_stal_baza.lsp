@@ -1222,12 +1222,68 @@
 
 ;#######################   PROFILE - POCZATEK  #######################
 
+;(defun c:azt_wczytaj_baze_profili_stalowych ()
+  ;(vl-cmdf "_.-insert" "C:\\AZT\\TEMPLATES\\SZABLON_PROFILI_STALOWYCH.dwg" '(0. 0. 0.) "" "" "")
+  ;(vl-cmdf "_.erase" (entlast) "")
+  ;(vl-cmdf "_.-purge" "Blocks" "SZABLON_PROFILI_STALOWYCH" "_N")
+  ;(vl-cmdf "_.-purge" "Blocks" "AZT_PROFIL_WIDOK" "_N")
+  ;(princ)
+;)
+
 (defun c:azt_wczytaj_baze_profili_stalowych ()
-  (vl-cmdf "_.-insert" "C:\\AZT\\TEMPLATES\\SZABLON_PROFILI_STALOWYCH.dwg" '(0. 0. 0.) "" "" "")
-  (vl-cmdf "_.erase" (entlast) "")
-  (vl-cmdf "_.-purge" "Blocks" "SZABLON_PROFILI_STALOWYCH" "_N")
-  (vl-cmdf "_.-purge" "Blocks" "AZT_PROFIL_WIDOK" "_N")
+  (setq azt_folder_plikow_mln "C:\\AZT\\DATA\\STEEL\\AZT_PL_WID\\")
+  (setq azt_pliki_mln (vl-directory-files azt_folder_plikow_mln "*.mln" 1))
+  (mapcar 'azt_wczytaj_mln azt_pliki_mln)
   (princ)
+)
+
+(defun azt_wczytaj_mln (azt_mln_plik / azt_plik_mln azt_slownik_mline azt_taki_sam_styl_mline azt_nowy_styl_mline azt_nazwa_stylu_mline)
+   (setq azt_plik_mln (open (strcat azt_folder_plikow_mln azt_mln_plik) "r"))
+   (if (= NIL azt_plik_mln)
+      (princ (strcat "\nNieprawidlowy plik MLN: " azt_mln_plik "\n"))
+      (progn
+         (setq azt_slownik_mline (dictsearch (namedobjdict) "ACAD_MLINESTYLE"))
+         (setq azt_taki_sam_styl_mline (list (cons 0 "MLINESTYLE")
+                          (cons 100 "AcDbMlineStyle")))
+         (while (/= nil (setq azt_styl_ml (azt_czytaj_obiekt_mln azt_plik_mln)))
+            (setq azt_nowy_styl_mline (append azt_taki_sam_styl_mline azt_styl_ml)
+                  azt_nazwa_stylu_mline    (entmakex azt_nowy_styl_mline))
+            (dictadd (cdr (assoc -1 azt_slownik_mline))
+                     (cdr (assoc 2 azt_nowy_styl_mline))
+                     azt_nazwa_stylu_mline))
+         (close azt_plik_mln))
+   )
+   (princ)
+)
+
+(defun azt_czytaj_obiekt_mln (azt_plik_mln / azt_lista_obiektow_mln azt_pierwsza_linia_mln azt_kod_wewnatrz_mln azt_wartosc_wewnatrz_mln)
+  (setq azt_lista_obiektow_mln nil)
+  (setq azt_pierwsza_linia_mln (read-line azt_plik_mln))
+  (if (/= nil azt_pierwsza_linia_mln)
+   (progn
+     (while (/= 0 (setq azt_kod_wewnatrz_mln (atoi (read-line azt_plik_mln))))
+        (setq azt_wartosc_wewnatrz_mln (vl-string-trim " " (read-line azt_plik_mln)))
+        (if (or (= azt_kod_wewnatrz_mln 2)
+                (= azt_kod_wewnatrz_mln 3)
+                (= azt_kod_wewnatrz_mln 6))
+           (setq azt_lista_obiektow_mln (append azt_lista_obiektow_mln
+                                    (list (cons azt_kod_wewnatrz_mln azt_wartosc_wewnatrz_mln)))))
+        (if (or (= azt_kod_wewnatrz_mln 70)
+                (= azt_kod_wewnatrz_mln 62)
+                (= azt_kod_wewnatrz_mln 71))
+           (setq azt_lista_obiektow_mln (append azt_lista_obiektow_mln
+                                    (list (cons azt_kod_wewnatrz_mln (atoi azt_wartosc_wewnatrz_mln))))))
+        (if (or (= azt_kod_wewnatrz_mln 51)
+                (= azt_kod_wewnatrz_mln 52))
+          (setq azt_lista_obiektow_mln 
+                (append azt_lista_obiektow_mln 
+                        (list (cons azt_kod_wewnatrz_mln (angtof azt_wartosc_wewnatrz_mln 0))))))
+        (if (= azt_kod_wewnatrz_mln 49)
+           (setq azt_lista_obiektow_mln 
+                 (append azt_lista_obiektow_mln
+                         (list (cons azt_kod_wewnatrz_mln (atof azt_wartosc_wewnatrz_mln)))))))
+   ))
+  azt_lista_obiektow_mln
 )
 
 (defun azt_aktualna_rodzina_profil_widok_filtruj_typ ()
@@ -1244,8 +1300,6 @@
 (setq azt_profil_widok_lista_wybor (strcat azt_profil_widok_lista_wybor "]"))
 (setq azt_typ_profil_widok (getstring (strcat "\nWybierz typ profilu " azt_profil_widok_lista_wybor ": <" azt_aktualny_typ_profil_widok ">")))
 )
-
-
 
 (defun c:azt_profil_widok_gora ()
   (setq azt_rodzina_profil_widok (getstring (strcat "\nWybierz rodzine profilu [HEA/HEB/UPE/L/RHS]: <" azt_aktualna_rodzina_profil_widok ">")))
