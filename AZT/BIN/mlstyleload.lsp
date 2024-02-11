@@ -6,7 +6,7 @@
 )
 
 (defun LoadMln (mlnFile / f mlineDict same newStyle xName)
-   (setq f (open mlnFile "r"))
+   (setq f (open (strcat folder mlnFile) "r"))
    (if (= NIL f)
       (princ (strcat "\nInvalid MLN file: " mlnFile "\n"))
       (progn
