@@ -8,8 +8,9 @@
 )
 
 (defun azt_profil_widok_start ()
-  (setq azt_aktualna_rodzina_profil_widok "UPE")
-  (setq azt_aktualny_typ_profil_widok "200")
+  (setq azt_aktualna_rodzina_profil_widok "HEA")
+  (setq azt_aktualny_typ_profil_widok "100")
+  (princ)
 )
 
 ;#######################   SRUBY - POCZATEK  #######################
@@ -1229,6 +1230,23 @@
   (princ)
 )
 
+(defun azt_aktualna_rodzina_profil_widok_filtruj_typ ()
+(setq azt_profil_widok_lista (vl-directory-files "C:\\AZT\\DATA\\STEEL\\AZT_PL_WID" (strcat azt_aktualna_rodzina_profil_widok "*.mln"))) ; Lista plikow
+(setq azt_profil_widok_lista_wybor "[")
+(setq i 0)
+(foreach file azt_profil_widok_lista
+  (setq i (1+ i))
+  (setq azt_profil_widok_lista_wybor (strcat azt_profil_widok_lista_wybor (vl-string-trim azt_aktualna_rodzina_profil_widok (vl-filename-base file))))
+  (if (< i (length azt_profil_widok_lista))
+    (setq azt_profil_widok_lista_wybor (strcat azt_profil_widok_lista_wybor "/"))
+  )
+)
+(setq azt_profil_widok_lista_wybor (strcat azt_profil_widok_lista_wybor "]"))
+(setq azt_typ_profil_widok (getstring (strcat "\nWybierz typ profilu " azt_profil_widok_lista_wybor ": <" azt_aktualny_typ_profil_widok ">")))
+)
+
+
+
 (defun c:azt_profil_widok_gora ()
   (setq azt_rodzina_profil_widok (getstring (strcat "\nWybierz rodzine profilu [HEA/HEB/UPE/L/RHS]: <" azt_aktualna_rodzina_profil_widok ">")))
   (if (equal azt_rodzina_profil_widok "")
@@ -1237,12 +1255,14 @@
   )
   (setq azt_aktualna_rodzina_profil_widok azt_rodzina_profil_widok)
   
-  (setq azt_typ_profil_widok (getstring (strcat "\nWybierz typ profilu [100/120/200]: <" azt_aktualny_typ_profil_widok ">")))
+(azt_aktualna_rodzina_profil_widok_filtruj_typ)
+
   (if (equal azt_typ_profil_widok "")
       (setq azt_typ_profil_widok azt_aktualny_typ_profil_widok)
       (princ)
   )
   (setq azt_aktualny_typ_profil_widok azt_typ_profil_widok)
+
   
   (setq azt_profil_widok_bok_wid (strcat "AZT_PL_WID_G_" azt_rodzina_profil_widok azt_typ_profil_widok))
   (repeat 100
@@ -1260,7 +1280,8 @@
   )
   (setq azt_aktualna_rodzina_profil_widok azt_rodzina_profil_widok)
   
-  (setq azt_typ_profil_widok (getstring (strcat "\nWybierz typ profilu [100/120/200]: <" azt_aktualny_typ_profil_widok ">")))
+  (azt_aktualna_rodzina_profil_widok_filtruj_typ)
+  
   (if (equal azt_typ_profil_widok "")
       (setq azt_typ_profil_widok azt_aktualny_typ_profil_widok)
       (princ)
@@ -1283,7 +1304,8 @@
   )
   (setq azt_aktualna_rodzina_profil_widok azt_rodzina_profil_widok)
   
-  (setq azt_typ_profil_widok (getstring (strcat "\nWybierz typ profilu [100/120/200]: <" azt_aktualny_typ_profil_widok ">")))
+(azt_aktualna_rodzina_profil_widok_filtruj_typ)
+
   (if (equal azt_typ_profil_widok "")
       (setq azt_typ_profil_widok azt_aktualny_typ_profil_widok)
       (princ)
