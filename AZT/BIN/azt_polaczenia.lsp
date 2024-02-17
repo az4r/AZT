@@ -143,5 +143,29 @@
   (command "_move" azt_polaczenie_zakladkowe_scalenie "" azt_polaczenie_zakladkowe_srodek)
   (setq azt_polaczenie_zakladkowe_scalenie (ssadd))
 )
+
+(defun c:azt_polaczenie_zakladkowe_przekroj ()
+  (azt_polaczenie_zakladkowe_parametry)
+  
+  (setq azt_polaczenie_zakladkowe_ilosc_srub_w_poziomie (getstring (strcat "\nPodaj ilosc srub w polaczeniu poziomo: <" azt_aktualne_polaczenie_zakladkowe_ilosc_srub_w_poziomie ">")))
+  (if (equal azt_polaczenie_zakladkowe_ilosc_srub_w_poziomie "")
+      (setq azt_polaczenie_zakladkowe_ilosc_srub_w_poziomie azt_aktualne_polaczenie_zakladkowe_ilosc_srub_w_poziomie)
+      (princ)
+  )
+  
+  ;######### OTWORY #########
+  ;(command "_ZOOM" "_SCALE" "10000X")
+  (command "_layer" "_S" "S_AXIS" "")
+  (setq azt_polaczenie_zakladkowe_aktualny_punktx "0")
+  (setq azt_polaczenie_zakladkowe_aktualny_punkty "0")
+  
+    (repeat (atoi azt_polaczenie_zakladkowe_ilosc_srub_w_poziomie)
+      (command "_point" (list (atoi azt_polaczenie_zakladkowe_aktualny_punktx) (atoi azt_polaczenie_zakladkowe_aktualny_punkty)))
+      (setq azt_polaczenie_zakladkowe_srodek (list (/ (cadr (assoc 10 (entget (entlast)))) 2) (/ (caddr (assoc 10 (entget (entlast)))) 2)))
+      (setq azt_polaczenie_zakladkowe_aktualny_punktx (itoa (+ (atoi azt_polaczenie_zakladkowe_aktualny_punktx) (atoi azt_polaczenie_parametr_p))))
+    )
+)
+
 (azt_polaczenie_zakladkowe_start)
-(c:azt_polaczenie_zakladkowe_widok)
+(c:azt_polaczenie_zakladkowe_przekroj)
+;(c:azt_polaczenie_zakladkowe_widok)
