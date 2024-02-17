@@ -1,4 +1,4 @@
-(defun c:azt_polaczenie_zakladkowe_start()
+(defun azt_polaczenie_zakladkowe_start()
   (setq azt_aktualne_polaczenie_zakladkowe_rodzaj_sruby "12")
   (setq azt_aktualne_polaczenie_zakladkowe_ilosc_srub_w_poziomie "2")
   (setq azt_aktualne_polaczenie_zakladkowe_ilosc_srub_w_pionie "2")
@@ -97,6 +97,8 @@
       (princ)
   )
   
+  (setq azt_polaczenie_zakladkowe_scalenie (ssadd))
+  
   ;######### OTWORY #########
   (command "_ZOOM" "_SCALE" "10000X")
   (command "_layer" "_S" "S_AXIS" "")
@@ -105,7 +107,8 @@
   (repeat (atoi azt_polaczenie_zakladkowe_ilosc_srub_w_pionie)
     (setq azt_polaczenie_zakladkowe_aktualny_punktx "0")
     (repeat (atoi azt_polaczenie_zakladkowe_ilosc_srub_w_poziomie)
-      (command "_point" (list (atoi azt_polaczenie_zakladkowe_aktualny_punktx) (atoi azt_polaczenie_zakladkowe_aktualny_punkty)))
+      (command "_point" (list (atoi azt_polaczenie_zakladkowe_aktualny_punktx) (atoi azt_polaczenie_zakladkowe_aktualny_punkty))) (ssadd (entlast) azt_polaczenie_zakladkowe_scalenie)
+      (setq azt_polaczenie_zakladkowe_srodek (list (/ (cadr (assoc 10 (entget (entlast)))) 2) (/ (caddr (assoc 10 (entget (entlast)))) 2)))
       (setq azt_polaczenie_zakladkowe_aktualny_punktx (itoa (+ (atoi azt_polaczenie_zakladkowe_aktualny_punktx) (atoi azt_polaczenie_parametr_p))))
     )
     (setq azt_polaczenie_zakladkowe_aktualny_punkty (itoa (+ (atoi azt_polaczenie_zakladkowe_aktualny_punkty) (atoi azt_polaczenie_parametr_p))))
@@ -121,7 +124,7 @@
   (setq azt_polaczenie_zakladkowe_aktualny_punkty1 (itoa (- (atoi azt_polaczenie_zakladkowe_aktualny_punkty1) (atoi azt_polaczenie_parametr_s))))
   (setq azt_polaczenie_zakladkowe_aktualny_punktx2 (itoa (+ (* (+ (atoi azt_polaczenie_zakladkowe_aktualny_punktx2) (atoi azt_polaczenie_parametr_p)) (1- (atoi azt_polaczenie_zakladkowe_ilosc_srub_w_poziomie))) (atoi azt_polaczenie_parametr_s))))
   (setq azt_polaczenie_zakladkowe_aktualny_punkty2 (itoa (+ (* (+ (atoi azt_polaczenie_zakladkowe_aktualny_punkty2) (atoi azt_polaczenie_parametr_p)) (1- (atoi azt_polaczenie_zakladkowe_ilosc_srub_w_pionie))) (atoi azt_polaczenie_parametr_s))))
-  (command "_rectang" (list (atoi azt_polaczenie_zakladkowe_aktualny_punktx1) (atoi azt_polaczenie_zakladkowe_aktualny_punkty1)) (list (atoi azt_polaczenie_zakladkowe_aktualny_punktx2) (atoi azt_polaczenie_zakladkowe_aktualny_punkty2)))
+  (command "_rectang" (list (atoi azt_polaczenie_zakladkowe_aktualny_punktx1) (atoi azt_polaczenie_zakladkowe_aktualny_punkty1)) (list (atoi azt_polaczenie_zakladkowe_aktualny_punktx2) (atoi azt_polaczenie_zakladkowe_aktualny_punkty2))) (ssadd (entlast) azt_polaczenie_zakladkowe_scalenie)
 
 
 ;######### KRAWEDZ BLACHY #########
@@ -134,8 +137,11 @@
   (setq azt_polaczenie_zakladkowe_aktualny_punkty1 (itoa (- (atoi azt_polaczenie_zakladkowe_aktualny_punkty1) (atoi azt_polaczenie_parametr_e))))
   (setq azt_polaczenie_zakladkowe_aktualny_punktx2 (itoa (+ (* (+ (atoi azt_polaczenie_zakladkowe_aktualny_punktx2) (atoi azt_polaczenie_parametr_p)) (1- (atoi azt_polaczenie_zakladkowe_ilosc_srub_w_poziomie))) (atoi azt_polaczenie_parametr_e))))
   (setq azt_polaczenie_zakladkowe_aktualny_punkty2 (itoa (+ (* (+ (atoi azt_polaczenie_zakladkowe_aktualny_punkty2) (atoi azt_polaczenie_parametr_p)) (1- (atoi azt_polaczenie_zakladkowe_ilosc_srub_w_pionie))) (atoi azt_polaczenie_parametr_e))))
-  (command "_rectang" (list (atoi azt_polaczenie_zakladkowe_aktualny_punktx1) (atoi azt_polaczenie_zakladkowe_aktualny_punkty1)) (list (atoi azt_polaczenie_zakladkowe_aktualny_punktx2) (atoi azt_polaczenie_zakladkowe_aktualny_punkty2)))
-(command "_ZOOM" "_SCALE" "0.0001X")
+  (command "_rectang" (list (atoi azt_polaczenie_zakladkowe_aktualny_punktx1) (atoi azt_polaczenie_zakladkowe_aktualny_punkty1)) (list (atoi azt_polaczenie_zakladkowe_aktualny_punktx2) (atoi azt_polaczenie_zakladkowe_aktualny_punkty2))) (ssadd (entlast) azt_polaczenie_zakladkowe_scalenie)
+  (command "_ZOOM" "_SCALE" "0.0001X")
+  (command "_group" "_C" "*" "" azt_polaczenie_zakladkowe_scalenie "")
+  (command "_move" azt_polaczenie_zakladkowe_scalenie "" azt_polaczenie_zakladkowe_srodek)
+  (setq azt_polaczenie_zakladkowe_scalenie (ssadd))
 )
-(c:azt_polaczenie_zakladkowe_start)
+(azt_polaczenie_zakladkowe_start)
 (c:azt_polaczenie_zakladkowe_widok)
