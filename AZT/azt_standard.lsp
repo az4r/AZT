@@ -182,3 +182,5 @@
    ;^C^C_UCS;;_move;_all;;0,0,1e99;;_move;_all;;0,0,-1e99;;
   (command "_move" "_all" "" "" "0,0,1e99" "_move" "_all" "" "" "0,0,-1e99")
 )
+
+(c:azt_skala_1)
