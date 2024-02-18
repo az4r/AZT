@@ -1,3 +1,7 @@
+(defun azt_standard_start ()
+  (setq azt_aktualna_skala_blokow "1")
+)
+
 (defun c:azt_skala_1 ()
   (setq azt_aktualna_skala_blokow "1")
   (command "-dimstyle" "_R" "ST_KR_1")
@@ -183,4 +187,4 @@
   (command "_move" "_all" "" "" "0,0,1e99" "_move" "_all" "" "" "0,0,-1e99")
 )
 
-(c:azt_skala_1)
+(azt_standard_start)
