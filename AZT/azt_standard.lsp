@@ -1,5 +1,8 @@
 (defun azt_standard_start ()
-  (setq azt_aktualna_skala_blokow "1")
+    (if (equal azt_aktualna_skala_blokow nil)
+      (setq azt_aktualna_skala_blokow "1")
+      (princ "")
+  )
 )
 
 (defun c:azt_skala_1 ()
