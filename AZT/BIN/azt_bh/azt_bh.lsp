@@ -3,12 +3,17 @@
       (setq azt_aktualna_skala_blokow "1")
       (princ "")
   )
+  
+  (vl-cmdf "_.-insert" "C:\\AZT\\TEMPLATES\\SZABLON_ZBROJENIE.dwg" '(0. 0. 0.) "" "" "")
+  (vl-cmdf "_.erase" (entlast) "")
+  (vl-cmdf "_.-purge" "Blocks" "SZABLON_ZBROJENIE" "_N")
+  
   (princ)
 )
 
 (defun c:azt_bz_strzalka ()
 
-(setq azt_bz_aktualny_styl_wymiarow (getvar "DIMSTYLE"))
+(setq azt_bz_dimstyle_wartosc_domyslna (getvar "DIMSTYLE"))
 
   (if (equal azt_aktualna_skala_blokow "1")
 	  (command "-dimstyle" "_R" "BZ_ST_1_mm")
@@ -43,12 +48,34 @@
   (setq azt_bz_strzalka_punkt2 (getpoint azt_bz_strzalka_punkt1 "\nWskaz punkt wstawienia opisu"))
   (command "_layer" "_S" "bz_odn" "")
   (command "_leader" azt_bz_strzalka_punkt1 azt_bz_strzalka_punkt2 "" "" "_N")
-  (command "-dimstyle" "_R" azt_bz_aktualny_styl_wymiarow)
+  (command "-dimstyle" "_R" azt_bz_dimstyle_wartosc_domyslna)
 )
 
 (defun c:azt_bz_punktowy_opis_preta ()
   (setq azt_bz_attdia_wartosc_domyslna (getvar "ATTDIA"))
+  (setq azt_bz_insunitdefsource_wartosc_domyslna (getvar "INSUNITSDEFSOURCE"))
   (setvar "ATTDIA" 0)
+  (setvar "INSUNITSDEFSOURCE" 0)
+  
+  
+  
+  (command "-insert" "C:\\AZT\\BLOCKS\\azt_bz_opis_poj.dwg" '(0. 0. 0.) "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "")
+   (if (tblsearch "block" "bik_BlkOpPret")
+      (progn
+          (setq bss (ssget "x" '((2 . "bik_BlkOpPret")(410 . "Model"))))
+        (setq val -1)
+        (repeat (sslength bss)
+          (setq bdata (entget (ssname bss (setq val (1+ val)))))
+           (setq bdata (subst (cons 2 "azt_bz_opis_poj") (assoc 2 bdata) bdata))
+          (entmod bdata)
+        )
+      )
+	)
+  (vl-cmdf "_.-purge" "Blocks" "bik_BlkOpPret" "_N")
+  (command "-rename" "_B" "azt_bz_opis_poj" "bik_BlkOpPret")
+  
+  
+  
   (setq azt_bz_dane_obiekt (vlax-ename->vla-object (car  (entsel "Wskaz opis aktywny preta"))))
   (setq azt_bz_dane_nazwa_bloku (vla-get-effectivename azt_bz_dane_obiekt))
   (setq azt_bz_dane_atrybuty (vlax-invoke azt_bz_dane_obiekt 'Getattributes))
@@ -154,6 +181,7 @@
 )
   
 (setvar "ATTDIA" azt_bz_attdia_wartosc_domyslna)
+(setvar "INSUNITSDEFSOURCE" azt_bz_insunitdefsource_wartosc_domyslna)
 (princ)
 )
 
