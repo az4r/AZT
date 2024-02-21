@@ -55,11 +55,11 @@
   (setq azt_bz_attdia_wartosc_domyslna (getvar "ATTDIA"))
   (setq azt_bz_insunitdefsource_wartosc_domyslna (getvar "INSUNITSDEFSOURCE"))
   (setvar "ATTDIA" 0)
-  (setvar "INSUNITSDEFSOURCE" 0)
+  (setvar "INSUNITSDEFSOURCE" 4)
   
   
   
-  (command "-insert" "C:\\AZT\\BLOCKS\\azt_bz_opis_poj.dwg" '(0. 0. 0.) "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "")
+  (command "-insert" "C:\\AZT\\BLOCKS\\azt_bz_opis_poj.dwg" '(0 0 0) "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "")
    (if (tblsearch "block" "bik_BlkOpPret")
       (progn
           (setq bss (ssget "x" '((2 . "bik_BlkOpPret")(410 . "Model"))))
