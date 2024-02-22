@@ -87,6 +87,7 @@
   (setq azt_bz_dane_blkpret_dlugosc (vla-get-textstring (nth 5 azt_bz_dane_atrybuty)))
   (setq azt_bz_dane_blkpret_uwaga (vla-get-textstring (nth 6 azt_bz_dane_atrybuty)))
   (setq azt_bz_dane_blkpret_metoda_l (vla-get-textstring (nth 7 azt_bz_dane_atrybuty)))
+  (setq azt_bz_dane_blkpret_typ_preta (vla-get-textstring (nth 8 azt_bz_dane_atrybuty)))
   (setq azt_bz_dane_blkpret_przedr_nr (vla-get-textstring (nth 9 azt_bz_dane_atrybuty)))
   (setq azt_bz_dane_blkpret_przedr_fi (vla-get-textstring (nth 10 azt_bz_dane_atrybuty)))
   (setq azt_bz_dane_blkpret_przedr_l (vla-get-textstring (nth 11 azt_bz_dane_atrybuty)))
@@ -104,6 +105,11 @@
 		;(if (= (vla-get-objectname azt_bz_dane_obj) "AcDbAttributeDefinition")
 		  ;(print (vla-get-TagString azt_bz_dane_obj))
         ;)
+          
+          
+    (if (= (vla-get-TagString azt_bz_dane_obj) "TYP_PRETA")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
 		
 		(if (= (vla-get-TagString azt_bz_dane_obj) "EURO_KOD_SEGMENTY")
 		  (vla-put-constant azt_bz_dane_obj :vlax-false)
@@ -137,7 +143,7 @@
   )
 
   (setq azt_bz_dane_blkpret_scalenie (ssadd))
-  (command "-insert" azt_bz_dane_nazwa_bloku '(0 0) "1" "" "" azt_bz_dane_blkpret_numer azt_bz_dane_blkpret_pozycja azt_bz_dane_blkpret_sztuk azt_bz_dane_blkpret_gatunek azt_bz_dane_blkpret_przekroj azt_bz_dane_blkpret_dlugosc azt_bz_dane_blkpret_uwaga azt_bz_dane_blkpret_metoda_l azt_bz_dane_blkpret_przedr_nr azt_bz_dane_blkpret_przedr_fi azt_bz_dane_blkpret_przedr_l azt_bz_dane_blkpret_przedr_szt azt_bz_dane_blkpret_euro_kod azt_bz_dane_blkpret_euro_kod_segmenty azt_bz_dane_blkpret_euro_kod_hak1 azt_bz_dane_blkpret_euro_kod_hak2 azt_bz_dane_blkpret_euro_kod_id azt_bz_dane_blkpret_euro_kod_id_c azt_bz_dane_blkpret_euro_kod_b_atr_0) (ssadd (entlast) azt_bz_dane_blkpret_scalenie)
+  (command "-insert" azt_bz_dane_nazwa_bloku '(0 0) "1" "" "" azt_bz_dane_blkpret_numer azt_bz_dane_blkpret_pozycja azt_bz_dane_blkpret_sztuk azt_bz_dane_blkpret_gatunek azt_bz_dane_blkpret_przekroj azt_bz_dane_blkpret_dlugosc azt_bz_dane_blkpret_uwaga azt_bz_dane_blkpret_metoda_l azt_bz_dane_blkpret_typ_preta azt_bz_dane_blkpret_przedr_nr azt_bz_dane_blkpret_przedr_fi azt_bz_dane_blkpret_przedr_l azt_bz_dane_blkpret_przedr_szt azt_bz_dane_blkpret_euro_kod azt_bz_dane_blkpret_euro_kod_segmenty azt_bz_dane_blkpret_euro_kod_hak1 azt_bz_dane_blkpret_euro_kod_hak2 azt_bz_dane_blkpret_euro_kod_id azt_bz_dane_blkpret_euro_kod_id_c azt_bz_dane_blkpret_euro_kod_b_atr_0) (ssadd (entlast) azt_bz_dane_blkpret_scalenie)
   (command "_layer" "_S" "bz_odn" "")
   (command "_ZOOM" "_SCALE" "10000X")
   (command "_circle" '(22.20000000 0.00000000) "4.20000000") (ssadd (entlast) azt_bz_dane_blkpret_scalenie)
@@ -153,6 +159,10 @@
 		;(if (= (vla-get-objectname azt_bz_dane_obj) "AcDbAttributeDefinition")
 		  ;(print (vla-get-TagString azt_bz_dane_obj))
         ;)
+          
+    (if (= (vla-get-TagString azt_bz_dane_obj) "TYP_PRETA")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
 				
 		(if (= (vla-get-TagString azt_bz_dane_obj) "EURO_KOD_SEGMENTY")
 		  (vla-put-constant azt_bz_dane_obj :vlax-true)
