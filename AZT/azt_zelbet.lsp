@@ -2,11 +2,14 @@
   (setq azt_aktualna_liczba_pretow_rozstaw "150")
 )
 
+(defun azt_dlugosc_preta_start ()
+  (setq azt_aktualna_dlugosc_preta_otulina1 "0")
+  (setq azt_aktualna_dlugosc_preta_otulina2 "0")
+)
+
 (defun c:azt_liczba_pretow ()
   (setq azt_liczba_pretow_punkt1 (getpoint "\nWskaz poczatkowy punkt rozkladu"))
-  (setq azt_liczba_pretow_punkt2 (getpoint azt_liczba_pretow_punkt1 "\nWskaz koncowy punkt rozkladu"))
-  ;(setq azt_liczba_pretow_rozstaw (getstring "\nPodaj rozstaw pretow: "))
-  
+  (setq azt_liczba_pretow_punkt2 (getpoint azt_liczba_pretow_punkt1 "\nWskaz koncowy punkt rozkladu"))  
   
   (setq azt_liczba_pretow_rozstaw (getstring (strcat "\nPodaj rozstaw pretow (mm): <" azt_aktualna_liczba_pretow_rozstaw ">")))
   (if (equal azt_liczba_pretow_rozstaw "")
@@ -15,12 +18,45 @@
   )
   (setq azt_aktualna_liczba_pretow_rozstaw azt_liczba_pretow_rozstaw)
   
-  
   (setq azt_liczba_pretow_odleglosc (distance azt_liczba_pretow_punkt1 azt_liczba_pretow_punkt2))
   (setq azt_liczba_pretow_wynik (rtos ((lambda ( azt_liczba_pretow_licznik ) (cond ((equal 0.0 azt_liczba_pretow_licznik 1e-8) (+ (/ azt_liczba_pretow_odleglosc (atoi azt_liczba_pretow_rozstaw)) 1)) ((< (+ (/ azt_liczba_pretow_odleglosc (atoi azt_liczba_pretow_rozstaw)) 1) 0) (- (+ (/ azt_liczba_pretow_odleglosc (atoi azt_liczba_pretow_rozstaw)) 1) azt_liczba_pretow_licznik)) ((+ (+ (/ azt_liczba_pretow_odleglosc (atoi azt_liczba_pretow_rozstaw)) 1) (- 1 azt_liczba_pretow_licznik))))) (rem (+ (/ azt_liczba_pretow_odleglosc (atoi azt_liczba_pretow_rozstaw)) 1) 1))))
   (princ (strcat "Liczba pretow w rozkladzie wynosi: " azt_liczba_pretow_wynik))
   (alert (strcat "Liczba pretow w rozkladzie wynosi: " azt_liczba_pretow_wynik))
   (princ)
+)
+
+(defun c:azt_dlugosc_preta ()
+  (setq azt_dlugosc_preta_punkt1 (getpoint "\nWskaz poczatek preta: "))
+  (setq azt_dlugosc_preta_punkt2 (getpoint azt_dlugosc_preta_punkt1 "\nWskaz koniec preta"))
+  
+  (setq azt_dlugosc_preta_otulina1 (getstring (strcat "\nPodaj otuline poczatku preta (mm): <" azt_aktualna_dlugosc_preta_otulina1 ">")))
+  (if (equal azt_dlugosc_preta_otulina1 "")
+      (setq azt_dlugosc_preta_otulina1 azt_aktualna_dlugosc_preta_otulina1)
+      (princ)
+  )
+  (setq azt_dlugosc_preta_otulina1 azt_aktualna_dlugosc_preta_otulina1)
+  
+  (setq azt_dlugosc_preta_otulina2 (getstring (strcat "\nPodaj otuline konca preta (mm): <" azt_aktualna_dlugosc_preta_otulina2 ">")))
+  (if (equal azt_dlugosc_preta_otulina2 "")
+      (setq azt_dlugosc_preta_otulina2 azt_aktualna_dlugosc_preta_otulina2)
+      (princ)
+  )
+  (setq azt_dlugosc_preta_otulina2 azt_aktualna_dlugosc_preta_otulina2)
+  
+  (setq azt_dlugosc_preta_rzeczywista_dl_preta (* 5 (fix (+ (/ (-(-(distance azt_dlugosc_preta_punkt1 azt_dlugosc_preta_punkt2) (atoi azt_dlugosc_preta_otulina1))(atoi azt_dlugosc_preta_otulina2)) 5) 0.0001))))
+  
+  (if (> azt_dlugosc_preta_rzeczywista_dl_preta 12000)
+     (setq azt_dlugosc_preta_zbrojeniowego "12000")
+     (setq azt_dlugosc_preta_zbrojeniowego (rtos (* 5 (fix (+ (/ (-(-(distance azt_dlugosc_preta_punkt1 azt_dlugosc_preta_punkt2) (atoi azt_dlugosc_preta_otulina1))(atoi azt_dlugosc_preta_otulina2)) 5) 0.0001)))))
+  )
+  
+  (setq azt_dlugosc_preta_zbrojeniowego_komunikat (strcat "Maksymalna dlugosc preta wynosi: " azt_dlugosc_preta_zbrojeniowego " mm"))
+  
+  ;(setq azt_dlugosc_preta_zbrojeniowego (strcat "Maksymalna dlugosc preta wynosi: " (rtos (* 5 (fix (+ (/ (-(-(distance azt_dlugosc_preta_punkt1 azt_dlugosc_preta_punkt2) (atoi azt_dlugosc_preta_otulina1))(atoi azt_dlugosc_preta_otulina2)) 5) 0.0001))))" mm"))
+  (princ azt_dlugosc_preta_zbrojeniowego_komunikat)
+  (alert azt_dlugosc_preta_zbrojeniowego_komunikat)
+  (princ)
+
 )
 
 ;####################################### AZT_ZELBET_OLD #################################################################
@@ -185,3 +221,4 @@
 )
 
 (azt_liczba_pretow_start)
+(azt_dlugosc_preta_start)
