@@ -1,3 +1,30 @@
+(defun azt_liczba_pretow_start ()
+  (setq azt_aktualna_liczba_pretow_rozstaw "150")
+)
+
+(defun c:azt_liczba_pretow ()
+  (setq azt_liczba_pretow_punkt1 (getpoint "\nWskaz poczatkowy punkt rozkladu"))
+  (setq azt_liczba_pretow_punkt2 (getpoint azt_liczba_pretow_punkt1 "\nWskaz koncowy punkt rozkladu"))
+  ;(setq azt_liczba_pretow_rozstaw (getstring "\nPodaj rozstaw pretow: "))
+  
+  
+  (setq azt_liczba_pretow_rozstaw (getstring (strcat "\nPodaj rozstaw pretow (mm): <" azt_aktualna_liczba_pretow_rozstaw ">")))
+  (if (equal azt_liczba_pretow_rozstaw "")
+      (setq azt_liczba_pretow_rozstaw azt_aktualna_liczba_pretow_rozstaw)
+      (princ)
+  )
+  (setq azt_aktualna_liczba_pretow_rozstaw azt_liczba_pretow_rozstaw)
+  
+  
+  (setq azt_liczba_pretow_odleglosc (distance azt_liczba_pretow_punkt1 azt_liczba_pretow_punkt2))
+  (setq azt_liczba_pretow_wynik (rtos ((lambda ( azt_liczba_pretow_licznik ) (cond ((equal 0.0 azt_liczba_pretow_licznik 1e-8) (+ (/ azt_liczba_pretow_odleglosc (atoi azt_liczba_pretow_rozstaw)) 1)) ((< (+ (/ azt_liczba_pretow_odleglosc (atoi azt_liczba_pretow_rozstaw)) 1) 0) (- (+ (/ azt_liczba_pretow_odleglosc (atoi azt_liczba_pretow_rozstaw)) 1) azt_liczba_pretow_licznik)) ((+ (+ (/ azt_liczba_pretow_odleglosc (atoi azt_liczba_pretow_rozstaw)) 1) (- 1 azt_liczba_pretow_licznik))))) (rem (+ (/ azt_liczba_pretow_odleglosc (atoi azt_liczba_pretow_rozstaw)) 1) 1))))
+  (princ (strcat "Liczba pretow w rozkladzie wynosi: " azt_liczba_pretow_wynik))
+  (alert (strcat "Liczba pretow w rozkladzie wynosi: " azt_liczba_pretow_wynik))
+  (princ)
+)
+
+;####################################### AZT_ZELBET_OLD #################################################################
+
 (defun zaokragl_w_dol_do_5 (wartosc)
   ;(* 5 (fix (/ wartosc 5)))
   (* 5 (fix (+ (/ wartosc 5) 0.0001)))
@@ -8,7 +35,7 @@
 )
 
 (defun c:pobierz_punkty ()
-  (setq punktA (getpoint "\nWskaz pocz¹tkowy skrajny punkt rozkladu z pierwszej strony (od lewej strony): "))
+  (setq punktA (getpoint "\nWskaz poczatkowy skrajny punkt rozkladu z pierwszej strony (od lewej strony): "))
   (setq punktB (getpoint "\nWskaz koncowy skrajny punkt rozkladu z pierwszej strony: "))
   (setq punktC (getpoint "\nWskaz poczatkowy skrajny punkt rozkladu z drugiej strony (z lewej strony): "))
   (setq punktD (getpoint "\nWskaz koncowy skrajny punkt rozkladu z drugiej strony: "))
@@ -120,7 +147,7 @@
 )
 
 (defun c:wybor_strony ()
-  (setq wybor (strcase (getstring "\Wyrownaj rozklad pretow wzledem lewej lub prawej strony okreslonego obszaru (L/P): ")))
+  (setq wybor (strcase (getstring "\Wyrownaj rozklad pretow wzgledem lewej lub prawej strony okreslonego obszaru (L/P): ")))
 
   (if (= wybor "L")
       (c:obszar_z_lewej)
@@ -156,3 +183,5 @@
   (print komunikat_ilosc_pretow_zbr)
   (alert (strcat komunikat_dl_rozkladu "\n" komunikat_dl_preta "\n" komunikat_ilosc_pretow_zbr))
 )
+
+(azt_liczba_pretow_start)
