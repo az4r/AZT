@@ -34,14 +34,14 @@
       (setq azt_dlugosc_preta_otulina1 azt_aktualna_dlugosc_preta_otulina1)
       (princ)
   )
-  (setq azt_dlugosc_preta_otulina1 azt_aktualna_dlugosc_preta_otulina1)
+  (setq azt_aktualna_dlugosc_preta_otulina1 azt_dlugosc_preta_otulina1)
   
   (setq azt_dlugosc_preta_otulina2 (getstring (strcat "\nPodaj otuline konca preta (mm): <" azt_aktualna_dlugosc_preta_otulina2 ">")))
   (if (equal azt_dlugosc_preta_otulina2 "")
       (setq azt_dlugosc_preta_otulina2 azt_aktualna_dlugosc_preta_otulina2)
       (princ)
   )
-  (setq azt_dlugosc_preta_otulina2 azt_aktualna_dlugosc_preta_otulina2)
+  (setq azt_aktualna_dlugosc_preta_otulina2 azt_dlugosc_preta_otulina2)
   
   (setq azt_dlugosc_preta_rzeczywista_dl_preta (* 5 (fix (+ (/ (-(-(distance azt_dlugosc_preta_punkt1 azt_dlugosc_preta_punkt2) (atoi azt_dlugosc_preta_otulina1))(atoi azt_dlugosc_preta_otulina2)) 5) 0.0001))))
   
