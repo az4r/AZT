@@ -55,6 +55,7 @@
 
 (defun c:azt_bz_strzalka_rozkladu ()
 
+  (vl-load-com)
   (vl-cmdf "_.-insert" "C:\\AZT\\TEMPLATES\\SZABLON_ZBROJENIE.dwg" '(0. 0. 0.) "" "" "")
   (vl-cmdf "_.erase" (entlast) "")
   (vl-cmdf "_.-purge" "Blocks" "SZABLON_ZBROJENIE" "_N")
@@ -93,9 +94,74 @@
   (setq azt_bz_strzalka_punkt1 (getpoint "\nWskaz punkt poczatkowy rozkladu: "))
   (setq azt_bz_strzalka_punkt2 (getpoint azt_bz_strzalka_punkt1 "\nWskaz punkt koncowy rozkladu: "))
   (command "_layer" "_S" "bz_odn" "")
-  (command "_dimaligned" azt_bz_strzalka_punkt1 azt_bz_strzalka_punkt2 "_T" " " (list (+ (car azt_bz_strzalka_punkt1) (* 2.4 (atoi azt_aktualna_skala_blokow))) (+ (cadr azt_bz_strzalka_punkt1) (* 2.4 (atoi azt_aktualna_skala_blokow)))))
+  ;(command "_dimaligned" azt_bz_strzalka_punkt1 azt_bz_strzalka_punkt2 "_T" " " (list (+ (car azt_bz_strzalka_punkt1) (* 2.4 (atoi azt_aktualna_skala_blokow))) (+ (cadr azt_bz_strzalka_punkt1) (* 2.4 (atoi azt_aktualna_skala_blokow)))))
+  (command "_dimaligned" azt_bz_strzalka_punkt1 azt_bz_strzalka_punkt2 "_T" " " azt_bz_strzalka_punkt2)
+  (vlax-put-property
+  (vlax-ename->vla-object (entlast))
+  'ExtensionLineExtend 0
+  )
   (command "-dimstyle" "_R" azt_bz_dimstyle_wartosc_domyslna)
 )
+
+(defun c:azt_bz_znacznik_rozkladu ()
+
+  (vl-load-com)
+  (vl-cmdf "_.-insert" "C:\\AZT\\TEMPLATES\\SZABLON_ZBROJENIE.dwg" '(0. 0. 0.) "" "" "")
+  (vl-cmdf "_.erase" (entlast) "")
+  (vl-cmdf "_.-purge" "Blocks" "SZABLON_ZBROJENIE" "_N")
+
+(setq azt_bz_dimstyle_wartosc_domyslna (getvar "DIMSTYLE"))
+
+  (if (equal azt_aktualna_skala_blokow "1")
+	  (command "-dimstyle" "_R" "BZ_ST_1_mm")
+      (princ "")
+  )
+  (if (equal azt_aktualna_skala_blokow "5")
+	  (command "-dimstyle" "_R" "BZ_ST_5_mm")
+      (princ "")
+  )
+  (if (equal azt_aktualna_skala_blokow "10")
+	  (command "-dimstyle" "_R" "BZ_ST_10_mm")
+      (princ "")
+  )
+  (if (equal azt_aktualna_skala_blokow "20")
+	  (command "-dimstyle" "_R" "BZ_ST_20_mm")
+      (princ "")
+  )
+  (if (equal azt_aktualna_skala_blokow "50")
+	  (command "-dimstyle" "_R" "BZ_ST_50_mm")
+      (princ "")
+  )
+  (if (equal azt_aktualna_skala_blokow "100")
+	  (command "-dimstyle" "_R" "BZ_ST_100_mm")
+      (princ "")
+  )
+  (if (equal azt_aktualna_skala_blokow "200")
+	  (command "-dimstyle" "_R" "BZ_ST_200_mm")
+      (princ "")
+  )
+  
+  (setq azt_bz_znacznik_rozkladu_punkt1 (getpoint "\nWskaz punkt zaczepienia opisu"))
+  (setq azt_bz_znacznik_rozkladu_punkt2 (getpoint azt_bz_znacznik_rozkladu_punkt1 "\nWskaz punkt wstawienia opisu"))
+  (command "_layer" "_S" "bz_odn" "")
+  (command "_leader" azt_bz_znacznik_rozkladu_punkt1 azt_bz_znacznik_rozkladu_punkt2 "" "" "_N")
+  (vlax-put-property
+  (vlax-ename->vla-object (entlast))
+  'ArrowheadType 12
+)
+(vlax-put-property
+  (vlax-ename->vla-object (entlast))
+  'ArrowheadSize 36
+)
+  (command "-dimstyle" "_R" azt_bz_dimstyle_wartosc_domyslna)
+)
+
+
+
+
+
+
+
 
 
 ;############################ OPIS PUNKTOWY ###############################
