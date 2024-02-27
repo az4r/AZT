@@ -20,8 +20,9 @@
   
   (setq azt_liczba_pretow_odleglosc (distance azt_liczba_pretow_punkt1 azt_liczba_pretow_punkt2))
   (setq azt_liczba_pretow_wynik (rtos ((lambda ( azt_liczba_pretow_licznik ) (cond ((equal 0.0 azt_liczba_pretow_licznik 1e-8) (+ (/ azt_liczba_pretow_odleglosc (atoi azt_liczba_pretow_rozstaw)) 1)) ((< (+ (/ azt_liczba_pretow_odleglosc (atoi azt_liczba_pretow_rozstaw)) 1) 0) (- (+ (/ azt_liczba_pretow_odleglosc (atoi azt_liczba_pretow_rozstaw)) 1) azt_liczba_pretow_licznik)) ((+ (+ (/ azt_liczba_pretow_odleglosc (atoi azt_liczba_pretow_rozstaw)) 1) (- 1 azt_liczba_pretow_licznik))))) (rem (+ (/ azt_liczba_pretow_odleglosc (atoi azt_liczba_pretow_rozstaw)) 1) 1))))
-  (princ (strcat "Liczba pretow w rozkladzie wynosi: " azt_liczba_pretow_wynik))
-  (alert (strcat "Liczba pretow w rozkladzie wynosi: " azt_liczba_pretow_wynik))
+  (setq azt_liczba_pretow_dlugosc_rozkladu (rtos (*(- (atoi azt_liczba_pretow_wynik) 1) (atoi azt_liczba_pretow_rozstaw))))
+  (princ (strcat "Liczba pretow w rozkladzie wynosi: " azt_liczba_pretow_wynik "\nWymagana dlugosc rozkladu dla tej liczby pretow wynosi: " azt_liczba_pretow_dlugosc_rozkladu " mm"))
+  (alert (strcat "Liczba pretow w rozkladzie wynosi: " azt_liczba_pretow_wynik "\nWymagana dlugosc rozkladu dla tej liczby pretow wynosi: " azt_liczba_pretow_dlugosc_rozkladu " mm"))
   (princ)
 )
 
