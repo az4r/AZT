@@ -932,4 +932,392 @@
 (princ)
 )
 
+;###################### OPIS POWIERZCHNIOWY - DOWOLNY ###################################
+
+(defun c:azt_bz_powierzchniowy_opis_preta_dow_p ()
+  (setq azt_bz_attdia_wartosc_domyslna (getvar "ATTDIA"))
+  (setq azt_bz_insunitdefsource_wartosc_domyslna (getvar "INSUNITSDEFSOURCE"))
+  (setvar "ATTDIA" 0)
+  (setvar "INSUNITSDEFSOURCE" 4)
+  
+  
+  
+  (command "-insert" "C:\\AZT\\BLOCKS\\azt_bz_opis_rozkl_p.dwg" '(0 0 0) "" "" "" "" "" "" "" "" "" "" "" "" "" "" "")
+   (if (tblsearch "block" "bik_BlkOpPretPow")
+      (progn
+          (setq bss (ssget "x" '((2 . "bik_BlkOpPretPow")(410 . "Model"))))
+        (setq val -1)
+        (repeat (sslength bss)
+          (setq bdata (entget (ssname bss (setq val (1+ val)))))
+           (setq bdata (subst (cons 2 "azt_bz_opis_rozkl_p") (assoc 2 bdata) bdata))
+          (entmod bdata)
+        )
+      )
+	)
+  (vl-cmdf "_.-purge" "Blocks" "bik_BlkOpPretPow" "_N")
+  (command "-rename" "_B" "azt_bz_opis_rozkl_p" "bik_BlkOpPretPow")
+  
+  
+  
+  ;(setq azt_bz_dane_obiekt (vlax-ename->vla-object (car  (entsel "Wskaz opis aktywny preta"))))
+  ;(setq azt_bz_dane_nazwa_bloku (vla-get-effectivename azt_bz_dane_obiekt))
+  (setq azt_bz_dane_nazwa_bloku "bik_BlkOpPretPow")
+  ;(setq azt_bz_dane_atrybuty (vlax-invoke azt_bz_dane_obiekt 'Getattributes))
+  (setq azt_bz_dane_blkpret_pozycja (getstring "\nPodaj numer elementu do ktorego przyporzadkowany bedzie pret: "))
+  (setq azt_bz_dane_blkpret_numer (getstring "\nPodaj numer preta: "))
+  (setq azt_bz_dane_blkpret_sztuk (getstring "\nPodaj liczbe pretow: "))
+  (if (equal azt_bz_dane_blkpret_sztuk "")
+      (setq azt_bz_dane_blkpret_sztuk "1")
+      (princ)
+  )
+  (setq azt_bz_dane_blkpret_gatunek "A-IIIN")
+  (setq azt_bz_dane_blkpret_przekroj (getstring "\nPodaj srednice pretow (#): "))
+  (setq azt_bz_dane_blkpret_dlugosc (getstring "\nPodaj calkowita dlugosc preta (mm): "))
+  (setq azt_bz_dane_blkpret_uwaga "")
+  (setq azt_bz_dane_blkpret_metoda_l "A")
+  (setq azt_bz_dane_blkpret_typ_preta "Pow")
+  (setq azt_bz_dane_blkpret_przedr_nr "Nr")
+  (setq azt_bz_dane_blkpret_przedr_fi "%%c")
+  (setq azt_bz_dane_blkpret_przedr_l "L=")
+  (setq azt_bz_dane_blkpret_przedr_szt "szt.")
+  (setq azt_bz_dane_blkpret_euro_kod "00")
+  (setq azt_bz_dane_blkpret_hak1 "0")
+  (setq azt_bz_dane_blkpret_hak2 "0")
+  (setq azt_bz_dane_blkpret_id "0")
+  (setq azt_bz_dane_blkpret_id_c "0")
+  (setq azt_bz_dane_blkpret_b_atr_0 "bik_Pret")
+  (setq azt_bz_dane_blkpret_przedr_e "CO")
+  (setq azt_bz_dane_blkpret_rozstaw "")
+  (setq azt_bz_dane_blkpret_przedr_u "/")
+  (setq azt_bz_dane_blkpret_symbol "")
+  (setq azt_bz_dane_blkpret_dlugosc_srd "")
+
+(vlax-for azt_bz_dane_obj (vla-item (vla-get-blocks (vla-get-activedocument (vlax-get-acad-object))) azt_bz_dane_nazwa_bloku)
+
+		;(if (= (vla-get-objectname azt_bz_dane_obj) "AcDbAttributeDefinition")
+		  ;(print (vla-get-TagString azt_bz_dane_obj))
+        ;)
+    
+	    (if (= (vla-get-TagString azt_bz_dane_obj) "GATUNEK")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )	
+          
+		(if (= (vla-get-TagString azt_bz_dane_obj) "TYP_PRETA")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "PRZEDR_NR")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "PRZEDR_SZT")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "EURO_KOD")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "HAK_1")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "HAK_2")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "ID")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "ID_C")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "B_ATR_0")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "PRZEDR_U")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "SYMBOL")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+)
+  
+(setq azt_bz_dane_blkpret_rozstaw (getstring "\nPodaj rozstaw pretow (mm): "))
+  (if (equal azt_bz_dane_blkpret_rozstaw "")
+      (setq azt_bz_dane_blkpret_rozstaw "XXX")
+      (princ)
+  )  
+
+  (setq azt_bz_dane_blkpret_scalenie (ssadd))
+  ;(command "-insert" azt_bz_dane_nazwa_bloku '(0 0) "1" "" "" azt_bz_dane_blkpret_numer azt_bz_dane_blkpret_pozycja azt_bz_dane_blkpret_sztuk azt_bz_dane_blkpret_gatunek azt_bz_dane_blkpret_przekroj azt_bz_dane_blkpret_dlugosc azt_bz_dane_blkpret_uwaga azt_bz_dane_blkpret_metoda_l azt_bz_dane_blkpret_typ_preta azt_bz_dane_blkpret_przedr_nr azt_bz_dane_blkpret_przedr_fi azt_bz_dane_blkpret_przedr_l azt_bz_dane_blkpret_przedr_szt azt_bz_dane_blkpret_euro_kod azt_bz_dane_blkpret_euro_kod_segmenty azt_bz_dane_blkpret_euro_kod_hak1 azt_bz_dane_blkpret_euro_kod_hak2 azt_bz_dane_blkpret_euro_kod_id azt_bz_dane_blkpret_euro_kod_id_c azt_bz_dane_blkpret_euro_kod_b_atr_0) (ssadd (entlast) azt_bz_dane_blkpret_scalenie)
+  (command "-insert" azt_bz_dane_nazwa_bloku '(0 0) "1" "" "" azt_bz_dane_blkpret_numer azt_bz_dane_blkpret_pozycja azt_bz_dane_blkpret_sztuk azt_bz_dane_blkpret_gatunek azt_bz_dane_blkpret_przekroj azt_bz_dane_blkpret_dlugosc azt_bz_dane_blkpret_uwaga azt_bz_dane_blkpret_metoda_l azt_bz_dane_blkpret_typ_preta azt_bz_dane_blkpret_przedr_nr azt_bz_dane_blkpret_przedr_fi azt_bz_dane_blkpret_przedr_l azt_bz_dane_blkpret_przedr_szt azt_bz_dane_blkpret_euro_kod azt_bz_dane_blkpret_hak1 azt_bz_dane_blkpret_hak2 azt_bz_dane_blkpret_id azt_bz_dane_blkpret_id_c azt_bz_dane_blkpret_b_atr_0 azt_bz_dane_blkpret_przedr_e azt_bz_dane_blkpret_rozstaw azt_bz_dane_blkpret_przedr_u azt_bz_dane_blkpret_symbol azt_bz_dane_blkpret_dlugosc_srd) (ssadd (entlast) azt_bz_dane_blkpret_scalenie)
+  (command "_layer" "_S" "bz_odn" "")
+  (command "_ZOOM" "_SCALE" "10000X")
+  (command "_circle" '(32.94285714 0.00000000) "4.20000000") (ssadd (entlast) azt_bz_dane_blkpret_scalenie)
+  (command "_pline" '(0.00000000 0.00000000) '(28.74285714 0.00000000) "") (ssadd (entlast) azt_bz_dane_blkpret_scalenie)
+  (command "_ZOOM" "_SCALE" "0.0001X")
+  (command "_group" "_C" "*" "" azt_bz_dane_blkpret_scalenie "")
+  (command "_scale" azt_bz_dane_blkpret_scalenie "" '(0 0) azt_aktualna_skala_blokow)
+  (command "_move" azt_bz_dane_blkpret_scalenie "" '(0 0))
+  (setq azt_bz_dane_blkpret_scalenie (ssadd))
+
+(vlax-for azt_bz_dane_obj (vla-item (vla-get-blocks (vla-get-activedocument (vlax-get-acad-object))) azt_bz_dane_nazwa_bloku)
+        
+		;(if (= (vla-get-objectname azt_bz_dane_obj) "AcDbAttributeDefinition")
+		  ;(print (vla-get-TagString azt_bz_dane_obj))
+        ;)
+          
+	    (if (= (vla-get-TagString azt_bz_dane_obj) "GATUNEK")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )	
+          
+		(if (= (vla-get-TagString azt_bz_dane_obj) "TYP_PRETA")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "PRZEDR_NR")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "PRZEDR_SZT")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "EURO_KOD")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "HAK_1")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "HAK_2")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "ID")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "ID_C")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "B_ATR_0")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "PRZEDR_U")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "SYMBOL")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+)
+  
+(setvar "ATTDIA" azt_bz_attdia_wartosc_domyslna)
+(setvar "INSUNITSDEFSOURCE" azt_bz_insunitdefsource_wartosc_domyslna)
+(princ)
+)
+
+(defun c:azt_bz_powierzchniowy_opis_preta_dow_l ()
+  (setq azt_bz_attdia_wartosc_domyslna (getvar "ATTDIA"))
+  (setq azt_bz_insunitdefsource_wartosc_domyslna (getvar "INSUNITSDEFSOURCE"))
+  (setvar "ATTDIA" 0)
+  (setvar "INSUNITSDEFSOURCE" 4)
+  
+  
+  
+  (command "-insert" "C:\\AZT\\BLOCKS\\azt_bz_opis_rozkl_l.dwg" '(0 0 0) "" "" "" "" "" "" "" "" "" "" "" "" "" "" "")
+   (if (tblsearch "block" "bik_BlkOpPretPow")
+      (progn
+          (setq bss (ssget "x" '((2 . "bik_BlkOpPretPow")(410 . "Model"))))
+        (setq val -1)
+        (repeat (sslength bss)
+          (setq bdata (entget (ssname bss (setq val (1+ val)))))
+           (setq bdata (subst (cons 2 "azt_bz_opis_rozkl_l") (assoc 2 bdata) bdata))
+          (entmod bdata)
+        )
+      )
+	)
+  (vl-cmdf "_.-purge" "Blocks" "bik_BlkOpPretPow" "_N")
+  (command "-rename" "_B" "azt_bz_opis_rozkl_l" "bik_BlkOpPretPow")
+  
+  
+  
+  ;(setq azt_bz_dane_obiekt (vlax-ename->vla-object (car  (entsel "Wskaz opis aktywny preta"))))
+  ;(setq azt_bz_dane_nazwa_bloku (vla-get-effectivename azt_bz_dane_obiekt))
+  (setq azt_bz_dane_nazwa_bloku "bik_BlkOpPretPow")
+  ;(setq azt_bz_dane_atrybuty (vlax-invoke azt_bz_dane_obiekt 'Getattributes))
+  (setq azt_bz_dane_blkpret_pozycja (getstring "\nPodaj numer elementu do ktorego przyporzadkowany bedzie pret: "))
+  (setq azt_bz_dane_blkpret_numer (getstring "\nPodaj numer preta: "))
+  (setq azt_bz_dane_blkpret_sztuk (getstring "\nPodaj liczbe pretow: "))
+  (if (equal azt_bz_dane_blkpret_sztuk "")
+      (setq azt_bz_dane_blkpret_sztuk "1")
+      (princ)
+  )
+  (setq azt_bz_dane_blkpret_gatunek "A-IIIN")
+  (setq azt_bz_dane_blkpret_przekroj (getstring "\nPodaj srednice pretow (#): "))
+  (setq azt_bz_dane_blkpret_dlugosc (getstring "\nPodaj calkowita dlugosc preta (mm): "))
+  (setq azt_bz_dane_blkpret_uwaga "")
+  (setq azt_bz_dane_blkpret_metoda_l "A")
+  (setq azt_bz_dane_blkpret_typ_preta "Pow")
+  (setq azt_bz_dane_blkpret_przedr_nr "Nr")
+  (setq azt_bz_dane_blkpret_przedr_fi "%%c")
+  (setq azt_bz_dane_blkpret_przedr_l "L=")
+  (setq azt_bz_dane_blkpret_przedr_szt "szt.")
+  (setq azt_bz_dane_blkpret_euro_kod "00")
+  (setq azt_bz_dane_blkpret_hak1 "0")
+  (setq azt_bz_dane_blkpret_hak2 "0")
+  (setq azt_bz_dane_blkpret_id "0")
+  (setq azt_bz_dane_blkpret_id_c "0")
+  (setq azt_bz_dane_blkpret_b_atr_0 "bik_Pret")
+  (setq azt_bz_dane_blkpret_przedr_e "CO")
+  (setq azt_bz_dane_blkpret_rozstaw "")
+  (setq azt_bz_dane_blkpret_przedr_u "/")
+  (setq azt_bz_dane_blkpret_symbol "")
+  (setq azt_bz_dane_blkpret_dlugosc_srd "")
+
+(vlax-for azt_bz_dane_obj (vla-item (vla-get-blocks (vla-get-activedocument (vlax-get-acad-object))) azt_bz_dane_nazwa_bloku)
+
+		;(if (= (vla-get-objectname azt_bz_dane_obj) "AcDbAttributeDefinition")
+		  ;(print (vla-get-TagString azt_bz_dane_obj))
+        ;)
+    
+	    (if (= (vla-get-TagString azt_bz_dane_obj) "GATUNEK")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )	
+          
+		(if (= (vla-get-TagString azt_bz_dane_obj) "TYP_PRETA")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "PRZEDR_NR")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "PRZEDR_SZT")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "EURO_KOD")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "HAK_1")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "HAK_2")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "ID")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "ID_C")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "B_ATR_0")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "PRZEDR_U")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "SYMBOL")
+		  (vla-put-constant azt_bz_dane_obj :vlax-false)
+        )
+)
+  
+(setq azt_bz_dane_blkpret_rozstaw (getstring "\nPodaj rozstaw pretow (mm): "))
+  (if (equal azt_bz_dane_blkpret_rozstaw "")
+      (setq azt_bz_dane_blkpret_rozstaw "XXX")
+      (princ)
+  )  
+
+  (setq azt_bz_dane_blkpret_scalenie (ssadd))
+  ;(command "-insert" azt_bz_dane_nazwa_bloku '(0 0) "1" "" "" azt_bz_dane_blkpret_numer azt_bz_dane_blkpret_pozycja azt_bz_dane_blkpret_sztuk azt_bz_dane_blkpret_gatunek azt_bz_dane_blkpret_przekroj azt_bz_dane_blkpret_dlugosc azt_bz_dane_blkpret_uwaga azt_bz_dane_blkpret_metoda_l azt_bz_dane_blkpret_typ_preta azt_bz_dane_blkpret_przedr_nr azt_bz_dane_blkpret_przedr_fi azt_bz_dane_blkpret_przedr_l azt_bz_dane_blkpret_przedr_szt azt_bz_dane_blkpret_euro_kod azt_bz_dane_blkpret_euro_kod_segmenty azt_bz_dane_blkpret_euro_kod_hak1 azt_bz_dane_blkpret_euro_kod_hak2 azt_bz_dane_blkpret_euro_kod_id azt_bz_dane_blkpret_euro_kod_id_c azt_bz_dane_blkpret_euro_kod_b_atr_0) (ssadd (entlast) azt_bz_dane_blkpret_scalenie)
+  (command "-insert" azt_bz_dane_nazwa_bloku '(0 0) "1" "" "" azt_bz_dane_blkpret_numer azt_bz_dane_blkpret_pozycja azt_bz_dane_blkpret_sztuk azt_bz_dane_blkpret_gatunek azt_bz_dane_blkpret_przekroj azt_bz_dane_blkpret_dlugosc azt_bz_dane_blkpret_uwaga azt_bz_dane_blkpret_metoda_l azt_bz_dane_blkpret_typ_preta azt_bz_dane_blkpret_przedr_nr azt_bz_dane_blkpret_przedr_fi azt_bz_dane_blkpret_przedr_l azt_bz_dane_blkpret_przedr_szt azt_bz_dane_blkpret_euro_kod azt_bz_dane_blkpret_hak1 azt_bz_dane_blkpret_hak2 azt_bz_dane_blkpret_id azt_bz_dane_blkpret_id_c azt_bz_dane_blkpret_b_atr_0 azt_bz_dane_blkpret_przedr_e azt_bz_dane_blkpret_rozstaw azt_bz_dane_blkpret_przedr_u azt_bz_dane_blkpret_symbol azt_bz_dane_blkpret_dlugosc_srd) (ssadd (entlast) azt_bz_dane_blkpret_scalenie)
+  (command "_layer" "_S" "bz_odn" "")
+  (command "_ZOOM" "_SCALE" "10000X")
+  (command "_circle" '(-32.94285714 0.00000000) "4.20000000") (ssadd (entlast) azt_bz_dane_blkpret_scalenie)
+  (command "_pline" '(0.00000000 0.00000000) '(-28.74285714 0.00000000) "") (ssadd (entlast) azt_bz_dane_blkpret_scalenie)
+  (command "_ZOOM" "_SCALE" "0.0001X")
+  (command "_group" "_C" "*" "" azt_bz_dane_blkpret_scalenie "")
+  (command "_scale" azt_bz_dane_blkpret_scalenie "" '(0 0) azt_aktualna_skala_blokow)
+  (command "_move" azt_bz_dane_blkpret_scalenie "" '(0 0))
+  (setq azt_bz_dane_blkpret_scalenie (ssadd))
+
+(vlax-for azt_bz_dane_obj (vla-item (vla-get-blocks (vla-get-activedocument (vlax-get-acad-object))) azt_bz_dane_nazwa_bloku)
+        
+		;(if (= (vla-get-objectname azt_bz_dane_obj) "AcDbAttributeDefinition")
+		  ;(print (vla-get-TagString azt_bz_dane_obj))
+        ;)
+          
+	    (if (= (vla-get-TagString azt_bz_dane_obj) "GATUNEK")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )	
+          
+		(if (= (vla-get-TagString azt_bz_dane_obj) "TYP_PRETA")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "PRZEDR_NR")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "PRZEDR_SZT")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "EURO_KOD")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "HAK_1")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "HAK_2")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "ID")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "ID_C")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "B_ATR_0")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "PRZEDR_U")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+		(if (= (vla-get-TagString azt_bz_dane_obj) "SYMBOL")
+		  (vla-put-constant azt_bz_dane_obj :vlax-true)
+        )
+		
+)
+  
+(setvar "ATTDIA" azt_bz_attdia_wartosc_domyslna)
+(setvar "INSUNITSDEFSOURCE" azt_bz_insunitdefsource_wartosc_domyslna)
+(princ)
+)
+
 (azt_bz_start)
