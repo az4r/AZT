@@ -1410,6 +1410,12 @@
   ;(princ)
 ;)
 
+(defun c:azt_otworz_generator_profili_wid ()
+  (setq azt_generator_profili_wid (vlax-get-or-create-object "Shell.Application"))
+  (vlax-invoke-method azt_generator_profili_wid 'open (findfile "C:\\AZT\\DATA\\STEEL\\AZT_PL_WID\\GENERATOR.xlsm"))
+  (vlax-release-object azt_generator_profili_wid)
+)
+
 (defun c:azt_wczytaj_baze_profili_stalowych ()
   (setq azt_folder_plikow_mln "C:\\AZT\\DATA\\STEEL\\AZT_PL_WID\\")
   (setq azt_pliki_mln (vl-directory-files azt_folder_plikow_mln "*.mln" 1))
