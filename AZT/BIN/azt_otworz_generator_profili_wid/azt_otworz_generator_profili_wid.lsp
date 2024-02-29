@@ -1,0 +1,5 @@
+(defun c:azt_otworz_generator_profili_wid ()
+  (setq azt_generator_profili_wid (vlax-get-or-create-object "Shell.Application"))
+  (vlax-invoke-method azt_generator_profili_wid 'open (findfile "C:\\AZT\\DATA\\STEEL\\AZT_PL_WID\\GENERATOR.xlsm"))
+  (vlax-release-object azt_generator_profili_wid)
+)
