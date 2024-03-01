@@ -7,6 +7,11 @@
   (setq azt_aktualna_dlugosc_preta_otulina2 "0")
 )
 
+(defun azt_pret_przekrojowy_start ()
+  (setq azt_aktualny_pret_przekrojowy_pojedynczy_srednica "10")
+  (princ)
+)
+
 (defun c:azt_liczba_pretow ()
   (setq azt_liczba_pretow_punkt1 (getpoint "\nWskaz poczatkowy punkt rozkladu"))
   (setq azt_liczba_pretow_punkt2 (getpoint azt_liczba_pretow_punkt1 "\nWskaz koncowy punkt rozkladu"))  
@@ -58,6 +63,41 @@
   (alert azt_dlugosc_preta_zbrojeniowego_komunikat)
   (princ)
 
+)
+
+(defun c:azt_pret_przekrojowy_pojedynczy_pelny ()
+  (setq azt_pret_przekrojowy_pojedynczy_pelny_scalenie (ssadd))
+  (setq azt_pret_przekrojowy_pojedynczy_pelny_srednica (getstring (strcat "Podaj srednice preta [6/8/10/12/16/20/25/28/32]: <" azt_aktualny_pret_przekrojowy_pojedynczy_srednica ">")))
+  (if (equal azt_pret_przekrojowy_pojedynczy_pelny_srednica "")
+      (setq azt_pret_przekrojowy_pojedynczy_pelny_srednica azt_aktualny_pret_przekrojowy_pojedynczy_srednica)
+      (princ)
+  )
+  (setq azt_aktualny_pret_przekrojowy_pojedynczy_srednica azt_pret_przekrojowy_pojedynczy_pelny_srednica)
+  (setq azt_pret_przekrojowy_pojedynczy_pelny_punkt_wstawienia (getpoint "\nWskaz punkt wstawienia preta: "))
+  (setvar "CECOLOR" "4")
+  (command "_circle" azt_pret_przekrojowy_pojedynczy_pelny_punkt_wstawienia (rtos (/ (atoi azt_pret_przekrojowy_pojedynczy_pelny_srednica) 2))) (ssadd (entlast) azt_pret_przekrojowy_pojedynczy_pelny_scalenie)
+  (command "_hatch" "_S" (entlast) "") (ssadd (entlast) azt_pret_przekrojowy_pojedynczy_pelny_scalenie)
+  (command "_group" "_C" "*" "" azt_pret_przekrojowy_pojedynczy_pelny_scalenie "")
+  (setq azt_pret_przekrojowy_pojedynczy_pelny_scalenie (ssadd))
+  (setvar "CECOLOR" "BYLAYER")
+  (princ)
+)
+
+(defun c:azt_pret_przekrojowy_pojedynczy_pusty ()
+  (setq azt_pret_przekrojowy_pojedynczy_pusty_scalenie (ssadd))
+  (setq azt_pret_przekrojowy_pojedynczy_pusty_srednica (getstring (strcat "Podaj srednice preta [6/8/10/12/16/20/25/28/32]: <" azt_aktualny_pret_przekrojowy_pojedynczy_srednica ">")))
+  (if (equal azt_pret_przekrojowy_pojedynczy_pusty_srednica "")
+      (setq azt_pret_przekrojowy_pojedynczy_pusty_srednica azt_aktualny_pret_przekrojowy_pojedynczy_srednica)
+      (princ)
+  )
+  (setq azt_aktualny_pret_przekrojowy_pojedynczy_srednica azt_pret_przekrojowy_pojedynczy_pusty_srednica)
+  (setq azt_pret_przekrojowy_pojedynczy_pusty_punkt_wstawienia (getpoint "\nWskaz punkt wstawienia preta: "))
+  (setvar "CECOLOR" "4")
+  (command "_circle" azt_pret_przekrojowy_pojedynczy_pusty_punkt_wstawienia (rtos (/ (atoi azt_pret_przekrojowy_pojedynczy_pusty_srednica) 2))) (ssadd (entlast) azt_pret_przekrojowy_pojedynczy_pusty_scalenie)
+  (command "_group" "_C" "*" "" azt_pret_przekrojowy_pojedynczy_pusty_scalenie "")
+  (setq azt_pret_przekrojowy_pojedynczy_pusty_scalenie (ssadd))
+  (setvar "CECOLOR" "BYLAYER")
+  (princ)
 )
 
 ;####################################### AZT_ZELBET_OLD #################################################################
@@ -190,3 +230,4 @@
 
 (azt_liczba_pretow_start)
 (azt_dlugosc_preta_start)
+(azt_pret_przekrojowy_start)
