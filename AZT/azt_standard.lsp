@@ -165,16 +165,33 @@
 )
 
 (defun c:azt_wstaw_opis_rzutni ()
+  
+  (vl-load-com)
+  (vl-cmdf "_.-insert" "C:\\AZT\\BLOCKS\\azt_opis_rzutni.dwg" '(0. 0. 0.) "" "" "" "")
+  (vl-cmdf "_.erase" (entlast) "")
+  
   (command "-layer" "_S" "S_TEXT" "")
-  (command "-insert" "s_NR_POZ" (getpoint) azt_aktualna_skala_blokow "" "0")
+  ;(command "-insert" "s_NR_POZ" (getpoint) azt_aktualna_skala_blokow "" "0")
+  (command "-insert" "azt_opis_rzutni" (getpoint) azt_aktualna_skala_blokow "" "0")
 )
 
 (defun c:azt_wstaw_opis_przekroju ()
+  
+  (vl-load-com)
+  (vl-cmdf "_.-insert" "C:\\AZT\\BLOCKS\\azt_opis_przekroju.dwg" '(0. 0. 0.) "" "" "" "" "")
+  (vl-cmdf "_.erase" (entlast) "")
+  
   (command "-layer" "_S" "S_TEXT" "")
-  (command "-insert" "s_OPIS" (getpoint) azt_aktualna_skala_blokow "" "0")
+  ;(command "-insert" "s_OPIS" (getpoint) azt_aktualna_skala_blokow "" "0")
+  (command "-insert" "azt_opis_przekroju" (getpoint) azt_aktualna_skala_blokow "" "0")
 )
 
 (defun c:azt_wstaw_symbol_przekroju ()
+
+  (vl-load-com)
+  (vl-cmdf "_.-insert" "C:\\AZT\\BLOCKS\\azt_symbol_przekroju.dwg" '(0. 0. 0.) "" "" "" "" "")
+  (vl-cmdf "_.erase" (entlast) "")
+
   (setq azt_attdia_wartosc_domyslna (getvar "ATTDIA"))
   (setvar "ATTDIA" 0)
   (setq azt_wstaw_symbol_przekroju_punkt1 (getpoint "\nWskaz pierwszy punkt przekroju: "))
@@ -182,7 +199,8 @@
   (setq azt_wstaw_symbol_przekroju_nazwa_przekroju (getstring "\Podaj pojedynczy symbol przekroju: "))
   (setq azt_wstaw_symbol_przekroju_odleglosc (distance azt_wstaw_symbol_przekroju_punkt1 azt_wstaw_symbol_przekroju_punkt2))
   (setq azt_wstaw_symbol_przekroju_kat (angle azt_wstaw_symbol_przekroju_punkt1 azt_wstaw_symbol_przekroju_punkt2))
-  (command "-insert" "s_PRZEKRÓJ" azt_wstaw_symbol_przekroju_punkt1 azt_aktualna_skala_blokow "" (* 180 (/ azt_wstaw_symbol_przekroju_kat pi)) azt_wstaw_symbol_przekroju_nazwa_przekroju azt_wstaw_symbol_przekroju_nazwa_przekroju)
+  ;(command "-insert" "s_PRZEKRÓJ" azt_wstaw_symbol_przekroju_punkt1 azt_aktualna_skala_blokow "" (* 180 (/ azt_wstaw_symbol_przekroju_kat pi)) azt_wstaw_symbol_przekroju_nazwa_przekroju azt_wstaw_symbol_przekroju_nazwa_przekroju)
+  (command "-insert" "azt_symbol_przekroju" azt_wstaw_symbol_przekroju_punkt1 azt_aktualna_skala_blokow "" (* 180 (/ azt_wstaw_symbol_przekroju_kat pi)) azt_wstaw_symbol_przekroju_nazwa_przekroju azt_wstaw_symbol_przekroju_nazwa_przekroju)
   (setq azt_znacznik_przekroju (vlax-ename->vla-object (cdr (assoc -1 (entget (entlast))))))
   (vla-put-value (car (vlax-invoke azt_znacznik_przekroju 'getdynamicblockproperties)) (vlax-make-variant azt_wstaw_symbol_przekroju_odleglosc (vlax-variant-type (vla-get-value (car (vlax-invoke azt_znacznik_przekroju 'getdynamicblockproperties))))))
   (setvar "ATTDIA" azt_attdia_wartosc_domyslna)
@@ -212,7 +230,7 @@
 
 (defun c:azt_wstaw_kote_gora ()
   (vl-load-com)
-  (vl-cmdf "_.-insert" "C:\\AZT\\BLOCKS\\s_KOTA_GORA.dwg" '(0. 0. 0.) "" "" "" "")
+  (vl-cmdf "_.-insert" "C:\\AZT\\BLOCKS\\azt_kota_gora.dwg" '(0. 0. 0.) "" "" "" "")
   (vl-cmdf "_.erase" (entlast) "")
   
   (setq azt_attdia_wartosc_domyslna (getvar "ATTDIA"))
@@ -226,7 +244,7 @@
 	(setq azt_wstaw_kote_gora_atrybuty (vlax-invoke (vlax-ename->vla-object (car azt_wstaw_kote_gora_kota_odniesienia)) 'Getattributes))
 	(setq azt_wstaw_kote_gora_punkt_odniesienia (vla-get-textstring (nth 0 azt_wstaw_kote_gora_atrybuty)))
 	(setq azt_wstaw_kote_gora_kota_odniesienia_punkt_wstawienia (rtos (caddr (assoc 10 (entget (car azt_wstaw_kote_gora_kota_odniesienia))))))
-	(setq azt_wstaw_kote_gora_poziom (rtos (+ (atof azt_wstaw_kote_gora_punkt_odniesienia) (/ (+ (atof azt_wstaw_kote_gora_punkt_odniesienia) (- (atof (rtos (cadr azt_wstaw_kote_gora_punkt_wstawienia))) (atof azt_wstaw_kote_gora_kota_odniesienia_punkt_wstawienia))) 1000))))
+	(setq azt_wstaw_kote_gora_poziom (rtos (+ (atof azt_wstaw_kote_gora_punkt_odniesienia) (/ (+ (atof azt_wstaw_kote_gora_punkt_odniesienia) (- (atof (rtos (cadr azt_wstaw_kote_gora_punkt_wstawienia))) (atof azt_wstaw_kote_gora_kota_odniesienia_punkt_wstawienia))) 1000)) 2 3))
 	)
   )
   
@@ -237,7 +255,7 @@
   (setq azt_wstaw_kote_gora_aktualny_poziom azt_wstaw_kote_gora_poziom)
   
   
-  (vl-cmdf "_.-insert" "s_KOTA_GORA" azt_wstaw_kote_gora_punkt_wstawienia azt_aktualna_skala_blokow "" "" azt_wstaw_kote_gora_poziom)
+  (vl-cmdf "_.-insert" "azt_kota_gora" azt_wstaw_kote_gora_punkt_wstawienia azt_aktualna_skala_blokow "" "" azt_wstaw_kote_gora_poziom)
   (setvar "ATTDIA" azt_attdia_wartosc_domyslna)
   (princ)
 )
