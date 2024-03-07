@@ -87,7 +87,8 @@
   )
   
   (setq azt_punkt_wstwienia_mtextu (getpoint "\nPodaj punkt wstawienia tekstu: "))
-  (command "_mtext" azt_punkt_wstwienia_mtextu "_H" azt_aktualna_wysokosc_tekstu azt_punkt_wstwienia_mtextu (getstring) "")
+  (command "_mtext" azt_punkt_wstwienia_mtextu "_H" azt_aktualna_wysokosc_tekstu azt_punkt_wstwienia_mtextu "\n" "")
+  (command "_mtedit" (entlast))
 )
 
 (defun c:azt_wstaw_sredni_mtext ()
@@ -124,7 +125,8 @@
   )
   
   (setq azt_punkt_wstwienia_mtextu (getpoint "\nPodaj punkt wstawienia tekstu: "))
-  (command "_mtext" azt_punkt_wstwienia_mtextu "_H" azt_aktualna_wysokosc_tekstu azt_punkt_wstwienia_mtextu (getstring) "")
+  (command "_mtext" azt_punkt_wstwienia_mtextu "_H" azt_aktualna_wysokosc_tekstu azt_punkt_wstwienia_mtextu "\n" "")
+  (command "_mtedit" (entlast))
 )
 
 (defun c:azt_wstaw_duzy_mtext ()
@@ -161,7 +163,8 @@
   )
   
   (setq azt_punkt_wstwienia_mtextu (getpoint "\nPodaj punkt wstawienia tekstu: "))
-  (command "_mtext" azt_punkt_wstwienia_mtextu "_H" azt_aktualna_wysokosc_tekstu azt_punkt_wstwienia_mtextu (getstring) "")
+  (command "_mtext" azt_punkt_wstwienia_mtextu "_H" azt_aktualna_wysokosc_tekstu azt_punkt_wstwienia_mtextu "\n" "")
+  (command "_mtedit" (entlast))
 )
 
 (defun c:azt_wstaw_opis_rzutni ()
