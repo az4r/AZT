@@ -5,9 +5,9 @@
   )
 )
 
-(defun azt_wstaw_kote_gora_start ()
-  (setq azt_wstaw_kote_gora_aktualny_poziom "0.000")
-  (setq azt_wstaw_kote_gora_aktualny_punkt_odniesienia "0.000")
+(defun azt_wstaw_kote_start ()
+  (setq azt_wstaw_kote_aktualny_poziom "0.000")
+  (setq azt_wstaw_kote_aktualny_punkt_odniesienia "0.000")
 )
 
 (defun c:azt_skala_1 ()
@@ -238,30 +238,62 @@
   
   (setq azt_attdia_wartosc_domyslna (getvar "ATTDIA"))
   (setvar "ATTDIA" 0)
-  (setq azt_wstaw_kote_gora_punkt_wstawienia (getpoint "\nWskaz punkt wstawienia koty wysokosciowej: "))
-  (setq azt_wstaw_kote_gora_kota_odniesienia (entsel "\nWskaz kote odniesienia lub ENTER: "))
+  (setq azt_wstaw_kote_punkt_wstawienia (getpoint "\nWskaz punkt wstawienia koty wysokosciowej: "))
+  (setq azt_wstaw_kote_kota_odniesienia (entsel "\nWskaz kote odniesienia lub ENTER: "))
   
-  (if (= azt_wstaw_kote_gora_kota_odniesienia nil)
-	(setq azt_wstaw_kote_gora_poziom (getstring (strcat "\nPodaj poziom konstrukcyjny: <" azt_wstaw_kote_gora_aktualny_poziom ">")))
+  (if (= azt_wstaw_kote_kota_odniesienia nil)
+	(setq azt_wstaw_kote_poziom (getstring (strcat "\nPodaj poziom konstrukcyjny: <" azt_wstaw_kote_aktualny_poziom ">")))
 	(progn
-	(setq azt_wstaw_kote_gora_atrybuty (vlax-invoke (vlax-ename->vla-object (car azt_wstaw_kote_gora_kota_odniesienia)) 'Getattributes))
-	(setq azt_wstaw_kote_gora_punkt_odniesienia (vla-get-textstring (nth 0 azt_wstaw_kote_gora_atrybuty)))
-	(setq azt_wstaw_kote_gora_kota_odniesienia_punkt_wstawienia (rtos (caddr (assoc 10 (entget (car azt_wstaw_kote_gora_kota_odniesienia))))))
-	(setq azt_wstaw_kote_gora_poziom (rtos (+ (atof azt_wstaw_kote_gora_punkt_odniesienia) (/ (+ (atof azt_wstaw_kote_gora_punkt_odniesienia) (- (atof (rtos (cadr azt_wstaw_kote_gora_punkt_wstawienia))) (atof azt_wstaw_kote_gora_kota_odniesienia_punkt_wstawienia))) 1000)) 2 3))
+	(setq azt_wstaw_kote_atrybuty (vlax-invoke (vlax-ename->vla-object (car azt_wstaw_kote_kota_odniesienia)) 'Getattributes))
+	(setq azt_wstaw_kote_punkt_odniesienia (vla-get-textstring (nth 0 azt_wstaw_kote_atrybuty)))
+	(setq azt_wstaw_kote_kota_odniesienia_punkt_wstawienia (rtos (caddr (assoc 10 (entget (car azt_wstaw_kote_kota_odniesienia))))))
+	(setq azt_wstaw_kote_poziom (rtos (+ (atof azt_wstaw_kote_punkt_odniesienia) (/ (+ (atof azt_wstaw_kote_punkt_odniesienia) (- (atof (rtos (cadr azt_wstaw_kote_punkt_wstawienia))) (atof azt_wstaw_kote_kota_odniesienia_punkt_wstawienia))) 1000)) 2 3))
 	)
   )
   
-  (if (equal azt_wstaw_kote_gora_poziom "")
-      (setq azt_wstaw_kote_gora_poziom azt_wstaw_kote_gora_aktualny_poziom)
+  (if (equal azt_wstaw_kote_poziom "")
+      (setq azt_wstaw_kote_poziom azt_wstaw_kote_aktualny_poziom)
       (princ)
   )
-  (setq azt_wstaw_kote_gora_aktualny_poziom azt_wstaw_kote_gora_poziom)
+  (setq azt_wstaw_kote_aktualny_poziom azt_wstaw_kote_poziom)
   
   
-  (vl-cmdf "_.-insert" "azt_kota_gora" azt_wstaw_kote_gora_punkt_wstawienia azt_aktualna_skala_blokow "" "" azt_wstaw_kote_gora_poziom)
+  (vl-cmdf "_.-insert" "azt_kota_gora" azt_wstaw_kote_punkt_wstawienia azt_aktualna_skala_blokow "" "" azt_wstaw_kote_poziom)
+  (setvar "ATTDIA" azt_attdia_wartosc_domyslna)
+  (princ)
+)
+
+(defun c:azt_wstaw_kote_dol ()
+  (vl-load-com)
+  (vl-cmdf "_.-insert" "C:\\AZT\\BLOCKS\\azt_kota_dol.dwg" '(0. 0. 0.) "" "" "" "")
+  (vl-cmdf "_.erase" (entlast) "")
+  
+  (setq azt_attdia_wartosc_domyslna (getvar "ATTDIA"))
+  (setvar "ATTDIA" 0)
+  (setq azt_wstaw_kote_punkt_wstawienia (getpoint "\nWskaz punkt wstawienia koty wysokosciowej: "))
+  (setq azt_wstaw_kote_kota_odniesienia (entsel "\nWskaz kote odniesienia lub ENTER: "))
+  
+  (if (= azt_wstaw_kote_kota_odniesienia nil)
+	(setq azt_wstaw_kote_poziom (getstring (strcat "\nPodaj poziom konstrukcyjny: <" azt_wstaw_kote_aktualny_poziom ">")))
+	(progn
+	(setq azt_wstaw_kote_atrybuty (vlax-invoke (vlax-ename->vla-object (car azt_wstaw_kote_kota_odniesienia)) 'Getattributes))
+	(setq azt_wstaw_kote_punkt_odniesienia (vla-get-textstring (nth 0 azt_wstaw_kote_atrybuty)))
+	(setq azt_wstaw_kote_kota_odniesienia_punkt_wstawienia (rtos (caddr (assoc 10 (entget (car azt_wstaw_kote_kota_odniesienia))))))
+	(setq azt_wstaw_kote_poziom (rtos (+ (atof azt_wstaw_kote_punkt_odniesienia) (/ (+ (atof azt_wstaw_kote_punkt_odniesienia) (- (atof (rtos (cadr azt_wstaw_kote_punkt_wstawienia))) (atof azt_wstaw_kote_kota_odniesienia_punkt_wstawienia))) 1000)) 2 3))
+	)
+  )
+  
+  (if (equal azt_wstaw_kote_poziom "")
+      (setq azt_wstaw_kote_poziom azt_wstaw_kote_aktualny_poziom)
+      (princ)
+  )
+  (setq azt_wstaw_kote_aktualny_poziom azt_wstaw_kote_poziom)
+  
+  
+  (vl-cmdf "_.-insert" "azt_kota_dol" azt_wstaw_kote_punkt_wstawienia azt_aktualna_skala_blokow "" "" azt_wstaw_kote_poziom)
   (setvar "ATTDIA" azt_attdia_wartosc_domyslna)
   (princ)
 )
 
 (azt_standard_start)
-(azt_wstaw_kote_gora_start)
+(azt_wstaw_kote_start)
