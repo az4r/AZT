@@ -103,7 +103,7 @@
       (azt_polaczenie_zal_parametry_m24)
       (princ)
   )
-  (if (equal azt_azt_polaczenie_zakladkowe_rodzaj_sruby "30")
+  (if (equal azt_polaczenie_zakladkowe_rodzaj_sruby "30")
       (azt_polaczenie_zal_parametry_m30)
       (princ)
   )
