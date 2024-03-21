@@ -2014,6 +2014,17 @@
   (princ)
 )
 
+(defun c:azt_profil_rozbij ()
+  ;(setq azt_selekcja_mline (ssget "X" (list (cons 0 "MLINE"))))
+  (command "_explode" (ssget "X" (list (cons 0 "MLINE"))))
+  (setq azt_selekcja_mline_yellow (ssget "X" (list (cons 62 2))))
+  (setq azt_selekcja_mline_210 (ssget "X" (list (cons 62 210))))
+  (setq azt_selekcja_mline_cyan (ssget "X" (list (cons 62 4))))
+  (command "_chprop" azt_selekcja_mline_yellow "" "_LT" "ByLayer" "_C" "ByLayer" "_LA" "S_VIEW" "")
+  (command "_chprop" azt_selekcja_mline_210 "" "_LT" "ByLayer" "_C" "ByLayer" "_LA" "S_AXIS" "")
+  (command "_chprop" azt_selekcja_mline_cyan "" "_LT" "ByLayer" "_C" "ByLayer" "_LA" "S_VIEW HIDDEN" "")
+)
+
 ;#######################   PROFILE - KONIEC  #######################
 
 (azt_sruba_start)
