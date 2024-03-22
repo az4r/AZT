@@ -2016,7 +2016,9 @@
 
 (defun c:azt_profil_rozbij ()
   ;(setq azt_selekcja_mline (ssget "X" (list (cons 0 "MLINE"))))
+  (repeat 10
   (command "_explode" (ssget "X" (list (cons 0 "MLINE"))))
+  )
   (setq azt_selekcja_mline_yellow (ssget "X" (list (cons 62 2))))
   (setq azt_selekcja_mline_210 (ssget "X" (list (cons 62 210))))
   (setq azt_selekcja_mline_cyan (ssget "X" (list (cons 62 4))))
